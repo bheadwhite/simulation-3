@@ -1,0 +1,55 @@
+body .background {
+    background-image: linear-gradient(
+        to right,
+        #ff70a6,
+        #ff9770,
+        #ffd670,
+        #e9ff70
+    );
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    height: 100vh;
+    width: 100vw;
+}
+body div {
+    align-self: center;
+}
+.auth-div {
+    background-image: linear-gradient(
+        to right,
+        #f46666,
+        #ffd670
+    );
+    color: white;
+    box-shadow: 1px 10px 45px black;
+    box-sizing: border-box;
+    border-radius: 2%;
+}
+
+h1 {
+    font-size: 5em;
+    margin: 5px;
+}
+
+.auth-border {
+    padding: 40px;
+    width: 30vw;
+}
+
+input {
+    margin: 20px;
+}
+.buttons {
+    width: 300px;
+    margin: auto;
+    display: flex;
+    justify-content: space-around
+}
+button {
+    margin: 0 30px;
+    padding: 9px 13px;
+    background: #403D39;
+    border: none;
+    color: white;
+}
