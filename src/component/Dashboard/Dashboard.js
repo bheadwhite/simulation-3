@@ -1,11 +1,14 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {Icon} from 'semantic-ui-react'
+import './dashboard.css'
 
 class Dashboard extends Component{
     constructor(){
         super()
         this.state = {
-            myPosts: false
+            myPosts: false,
+            searchQuery: ''
         }
     }
 
@@ -18,14 +21,14 @@ class Dashboard extends Component{
             console.log('its true now')
         }
         return (
-            <div>
+            <div className='dashSearch'>
                 <div className="searchbar">
-                <input type='text' ></input>
-                <button>search</button>
+                <input type='text' placeholder='Search by Title'></input>
+                <Icon name='search' bordered inverted color='orange' />
                 <button>reset</button>
-                <label htmlFor="myPosts">My Posts</label>
-                <input type="checkbox" checked onChange={(e)=> {this.handleInputChange(e)}}/>
                 </div>
+                <label htmlFor="myPosts">My Posts</label>
+                <input type="checkbox" className='checkbox' checked onChange={(e)=> {this.handleInputChange(e)}}/>
             </div>
         )
     }

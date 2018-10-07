@@ -1,5 +1,4 @@
 .App {
-    background: none;
     display: flex;
     justify-content: flex-start;
 }
@@ -32,13 +31,14 @@ img {
     flex-direction: column;
     justify-content: space-between;
     align-content: center;
-width: 88px;
-height: 100vh;
-background-image: linear-gradient(
-    to bottom,
-    #ff9770,
-    #ff70a6
-);
+    width: 88px;
+    height: 100vh;
+    box-shadow: 0 1px 7px grey;
+    background-image: linear-gradient(
+        to bottom,
+        #ff9770,
+        #ff70a6
+    );
 }
 button {
     margin: 15px 0;

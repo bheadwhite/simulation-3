@@ -1,0 +1,39 @@
+.dashSearch {
+    display: flex;
+    box-shadow: 0 0 5px grey;
+    width: 80%;
+    margin: 50px auto 6px auto;
+    text-align: left;
+    background: white;
+}
+.searchbar {
+width: 100%;
+}
+
+.searchbar input {
+    width: 450px;
+    margin-right: 0;
+    height: 28px;
+    border: .3px solid lightgrey;
+}
+button, .dashSearch i {
+    margin: 0;
+}
+button {
+    padding: 6px;
+}
+label {
+    width: 80px;
+    display: flex;
+    align-items: center;
+}
+.checkbox {
+    margin: auto 30px auto 0px;
+}
+
+input[type=checkbox]:checked {
+    background: none;
+    color:black;
+}
+
+
