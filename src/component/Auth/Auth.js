@@ -20,11 +20,14 @@ class Auth extends Component{
                     <button onClick={()=>{
                     axios.post('http://localhost:3001/api/login', 
                     {username:this.props.username, password:this.props.password})
-                    .then(res => {console.log(res); this.props.history.push('/dashboard'); setProfile(res.data[0].profile_pic)});}}>Login</button>
+                    .then(res => {console.log(res); setProfile(res.data[0].pic); this.props.history.push('/dashboard'); });}}>Login</button>
                 <button onClick={()=>{
                     axios.post('http://localhost:3001/api/register', 
                     {username:this.props.username, password:this.props.password})
-                    .then(res => console.log(res))}}>Register</button>
+                    .then(res => {
+                        setProfile(res.data[0].pic);
+                        this.props.history.push('/dashboard')
+                    })}}>Register</button>
                     </div>
                 </div>
                 </div>
@@ -40,5 +43,12 @@ function mapStateToProps(state){
         profilePic: state.profilePic
     }
 }
+const mapDispatchToProps = () => {
+    return {
+        setUser,
+        setPassword,
+        setProfile
+    }
+}
 
-export default connect(mapStateToProps, {setUser, setPassword, setProfile})(Auth)
+export default connect(mapStateToProps, mapDispatchToProps())(Auth)

@@ -2,7 +2,7 @@ module.exports = {
     addUser: (req, res, next) => {
         const db = req.app.get('db');
 
-        db.add_user([req.body.username, req.body.password])
+        db.add_user([req.body.username, req.body.password, `https://robohash.org/${req.body.username}`])
         .then(result => { res.status(201).send(result);})
         .catch( err => {
             console.log(err);

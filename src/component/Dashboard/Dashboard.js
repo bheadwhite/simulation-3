@@ -10,10 +10,10 @@ class Dashboard extends Component{
     }
 
     handleInputChange(e){
-        const target = e.target.value;
-        console.log(target)
+        // const target = e.target.value;
     }
     render(){
+        console.log(this.props)
         if(this.state.myPosts === true){
             console.log('its true now')
         }
@@ -24,7 +24,7 @@ class Dashboard extends Component{
                 <button>search</button>
                 <button>reset</button>
                 <label htmlFor="myPosts">My Posts</label>
-                <input type="checkbox" checked={checked} onChange={(e)=> {this.handleInputChange(e)}}/>
+                <input type="checkbox" checked onChange={(e)=> {this.handleInputChange(e)}}/>
                 </div>
             </div>
         )
@@ -32,7 +32,8 @@ class Dashboard extends Component{
 }
 function mapStateToProps(state){
     return {
-        myPosts: state.myPosts
+        myPosts: state.myPosts,
+        state
 
     }
 }

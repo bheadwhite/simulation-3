@@ -9,7 +9,7 @@ const session = require('express-session')
 
 app.use(cors())
 app.use(bodyParser.json())
-massive(process.env.CONNECTION_STRING).then(db =>{
+massive(process.env.CONNECTIONSTRINGGG).then(db =>{
     app.set('db', db)
     console.log('db is connected')
 })
