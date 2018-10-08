@@ -21,7 +21,7 @@ app.use(session({
 //express.static will serve up the front end through the server.
 
 app.post('/api/register', controller.addUser )
-
 app.post('/api/login', controller.loginUser)
+app.get('/api/posts/', controller.getPosts)
 
 app.listen(3001, ()=> {console.log('server is running')})

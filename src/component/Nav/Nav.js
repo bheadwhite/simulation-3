@@ -20,7 +20,6 @@ function Nav(props){
     if(props.location.pathname === '/'){
         return null
     }
-    console.log(props)
     return (
         <div className="nav-sidebar">
             <div className="nav-sidebar2">
@@ -30,10 +29,10 @@ function Nav(props){
                     </div>
                     <p>{props.username}</p>
                 </div>
-                <Link to="/Dashboard"><Icon color='rey' inverted size="huge" name='home' style={styles.icon}/></Link>
+                <Link to="/Dashboard"><Icon inverted size="huge" name='home' style={styles.icon}/></Link>
                 <Link to="/new"><Icon name="edit outline" size='huge' style={styles.edit}/></Link>
             </div>
-            <Link onClick={()=> {props.reset()}}to="/"><Icon color='white' size='huge' name="power" style={styles.power}/></Link>
+            <Link onClick={()=> {props.reset()}}to="/"><Icon size='huge' name="power" style={styles.power}/></Link>
         </div>
     )
 }

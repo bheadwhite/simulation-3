@@ -20,7 +20,7 @@ class Auth extends Component{
                     <button onClick={()=>{
                     axios.post('http://localhost:3001/api/login', 
                     {username:this.props.username, password:this.props.password})
-                    .then(res => {console.log(res); setProfile(res.data[0].pic); this.props.history.push('/dashboard'); });}}>Login</button>
+                    .then(res => {setProfile(res.data[0].pic); this.props.history.push('/dashboard'); });}}>Login</button>
                 <button onClick={()=>{
                     axios.post('http://localhost:3001/api/register', 
                     {username:this.props.username, password:this.props.password})
