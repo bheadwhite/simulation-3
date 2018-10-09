@@ -18,11 +18,11 @@ class Dashboard extends Component{
 
     handleSubmit(e){
         e.preventDefault()
-        this.getPosts(this.state.myPosts, this.state.searchQuery, this.props.state.username)
+        this.getPosts(this.state.myPosts, this.state.searchQuery)
     }
     
-    getPosts(userPosts, search, name){
-        axios.get(`http://localhost:3001/api/posts/?userPosts=${userPosts}&search=${search}&username=${name}`).then(resp => {this.setState({posts: resp.data})}).catch(e => console.log(e))
+    async getPosts(userPosts, search){
+       await axios.get(`http://localhost:3001/api/posts/${this.props.state.userId}/?userPosts=${userPosts}&search=${search}`).then(resp => {this.setState({posts: resp.data})}).catch(e => console.log(e))
     }
 
     componentDidMount(){

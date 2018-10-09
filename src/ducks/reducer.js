@@ -1,6 +1,6 @@
 const SET_USERNAME =    'SET_USERNAME'
 const SET_PASSWORD =    'SET_PASSWORD'
-const SET_PIC =         'SET_PIC'
+const SET_PROFILE =     'SET_PROFILE'
 const RESET =           'RESET'
 
 const initialState = {
@@ -17,8 +17,8 @@ export default function reducer(state=initialState, action){
             return Object.assign({}, state, {username: action.payload})
         case SET_PASSWORD:
             return Object.assign({}, state, {password: action.payload})
-        case SET_PIC: 
-            return Object.assign({}, state, {profilePic: action.payload})
+        case SET_PROFILE: 
+            return Object.assign({}, state, {profilePic: action.payload.pic, userId: action.payload.id})
         case RESET: 
             return Object.assign({}, initialState)
         default:
@@ -40,10 +40,10 @@ export function setPassword(pass){
     }
 }
 
-export function setProfile(pic){
+export function setProfile(data){
     return {
-        type: SET_PIC,
-        payload: pic
+        type: SET_PROFILE,
+        payload: data
     }
 }
 

@@ -22,6 +22,6 @@ app.use(session({
 
 app.post('/api/register', controller.addUser )
 app.post('/api/login', controller.loginUser)
-app.get('/api/posts/', controller.getPosts)
+app.get('/api/posts/:id/', controller.getPosts)
 
 app.listen(3001, ()=> {console.log('server is running')})
