@@ -26,7 +26,7 @@ module.exports = {
     getPosts: (req, res, next) => {
         const db = req.app.get('db')
         const {id} = req.params
-        const {userPosts, search, username} = req.query
+        const {userPosts, search} = req.query
         if (userPosts == 'true' && search !== ''){
             db.query(
                 `select u.id, u.username, u.pic, p.title, p.content, p.img from helo_users as u join helo_posts as p on u.id = p.user_id where LOWER(p.title) like LOWER('%${search}%')`)

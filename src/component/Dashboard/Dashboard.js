@@ -18,11 +18,13 @@ class Dashboard extends Component{
 
     handleSubmit(e){
         e.preventDefault()
-        this.getPosts(this.state.myPosts, this.state.searchQuery)
+        this.getPosts()
     }
     
-    async getPosts(userPosts, search){
-       await axios.get(`http://localhost:3001/api/posts/${this.props.state.userId}/?userPosts=${userPosts}&search=${search}`).then(resp => {this.setState({posts: resp.data})}).catch(e => console.log(e))
+    async getPosts(){
+        const {userId} = this.props.state
+        const {myPosts, searchQuery} = this.state
+       await axios.get(`http://localhost:3001/api/posts/${userId}/?userPosts=${myPosts}&search=${searchQuery}`).then(resp => {this.setState({posts: resp.data, searchQuery: ''})}).catch(e => console.log(e))
     }
 
     componentDidMount(){
@@ -35,11 +37,11 @@ class Dashboard extends Component{
             <div className='dashSearch'>
                 <form>
                     <div className="searchbar">
-                        <input type='text' placeholder='Search by Title' onChange={(e)=> {this.setState({searchQuery: e.target.value})}}></input>
+                        <input type='text' placeholder='Search by Title' onChange={(e)=> {this.setState({searchQuery: e.target.value})}} value={this.state.searchQuery}></input>
                         <button id='noBut' type='submit' onClick={(e)=>{this.handleSubmit(e)}}>
                             <Icon name='search' bordered inverted color='orange' />
                         </button>
-                        <button onClick={()=> this.setState({searchQuery: '', myPosts: true})}>reset</button>
+                        <button onClick={async (e)=> {await this.setState({searchQuery: ''}); this.getPosts()}}>reset</button>
                     </div>
                 </form>
                 <div className='check'>
