@@ -8,13 +8,13 @@ import './nav.css'
 function Nav(props){
     const styles = {
         icon: {
-            margin: '20px 5px 60px 5px',
+            margin: '15px 5px 30px 5px',
         },
         edit: {
             paddingLeft: '8px'
         },
         power: {
-            marginBottom: '35px'
+            marginBottom: '39px'
         }
     }
     if(props.location.pathname === '/'){

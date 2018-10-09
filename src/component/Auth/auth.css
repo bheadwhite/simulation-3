@@ -27,7 +27,7 @@ body div {
     border-radius: 2%;
 }
 
-h1 {
+.auth-border h1 {
     font-size: 5em;
     margin: 5px;
 }
@@ -37,16 +37,16 @@ h1 {
     width: 30vw;
 }
 
-input {
+.auth-border input {
     margin: 20px;
 }
-.buttons {
+.auth-border .buttons {
     width: 300px;
     margin: auto;
     display: flex;
     justify-content: space-around
 }
-button {
+.auth-border button {
     margin: 0 30px;
     padding: 9px 13px;
     background: #403D39;

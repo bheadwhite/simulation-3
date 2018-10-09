@@ -6,19 +6,19 @@
     width: 85px;
     height: 100px;
 }
-.pic {
+.nav-sidebar .pic {
     height: 66px;
     width: 68px;
     margin: 20px auto 0 auto;
     background: white;
     border-radius: 50px;
 }
-p {
+.nav-sidebar p {
     margin: 5px;
     color: white;
     
 }
-img {
+.nav-sidebar img {
     max-width: 100%;
     min-height:100%;
     max-height: 100%;
@@ -40,9 +40,9 @@ img {
         #ff70a6
     );
 }
-button {
+.nav-sidebar button {
     margin: 15px 0;
 }
-i {
+.nav-sidebar i {
     color: white;
 }

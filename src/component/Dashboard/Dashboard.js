@@ -1,10 +1,12 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-
+import {Link} from 'react-router-dom'
+import {setPosts, setPost} from './../../ducks/reducer'
 import axios from 'axios'
 
 import {Icon} from 'semantic-ui-react'
 import './dashboard.css'
+
 
 class Dashboard extends Component{
     constructor(){
@@ -24,7 +26,7 @@ class Dashboard extends Component{
     async getPosts(){
         const {userId} = this.props.state
         const {myPosts, searchQuery} = this.state
-       await axios.get(`http://localhost:3001/api/posts/${userId}/?userPosts=${myPosts}&search=${searchQuery}`).then(resp => {this.setState({posts: resp.data, searchQuery: ''})}).catch(e => console.log(e))
+       await axios.get(`http://localhost:3001/api/posts/${userId}/?userPosts=${myPosts}&search=${searchQuery}`).then(resp => {this.setState({posts: resp.data, searchQuery: ''}); this.props.setPosts(resp.data)}).catch(e => console.log(e))
     }
 
     componentDidMount(){
@@ -55,10 +57,10 @@ class Dashboard extends Component{
             {
                 this.state.posts.map(p => {
                     return (
-                        <div key={p.id} className='postItem'>
+                        <Link key={p.pid} to={`/post/${p.pid}`}><div className='postItem' onClick={()=> {this.props.setPost(p.pid)}}>
                         <h2>{p.title}</h2>
                            <div><p>by {p.username}</p><img src={p.pic} alt={p.username} /></div>
-                        </div>
+                        </div></Link>
                     )
                 })
             }
@@ -71,8 +73,14 @@ function mapStateToProps(state){
     return {
         myPosts: state.myPosts,
         state
-
     }
 }
 
-export default connect(mapStateToProps, {})(Dashboard)
+const mapDispatchToProps = () => {
+    return {
+        setPosts,
+        setPost
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps())(Dashboard)

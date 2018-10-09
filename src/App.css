@@ -38,3 +38,52 @@ html {
 
 
 }
+
+.postViews {
+  display: flex;
+  box-shadow: 0 0 5px grey;
+  width: 80%;
+  margin: auto;
+  background: white;
+  justify-content: space-between;
+  padding: 20px;
+  flex-direction: column;
+}
+
+.postViews .header {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 23px;
+
+}
+.postViews .header h1 {
+  color: orange;
+  font-size: 41px;
+}
+.postViews .header .picEnd {
+  display: flex;
+  align-items: flex-end;
+}
+#root > div > div.postViews > div.header > div > div > img {
+  height: 50px;
+  width: 50px;
+}
+#root > div > div.postViews > div.header > div > p {
+  color: black;
+}
+
+.postViews .content {
+  display: flex;
+
+}
+#root > div > div.postViews > div.content > div:nth-child(2){
+  min-height: 340px;
+}
+.postViews .content img {
+  border-radius: 0;
+  box-shadow: none;
+}
+.postViews .content div p {
+  color: black;
+}
