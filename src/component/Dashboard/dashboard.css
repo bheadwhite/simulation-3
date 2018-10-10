@@ -6,6 +6,7 @@
     text-align: left;
     background: white;
     justify-content: space-between;
+    padding: 20px;
 }
 .searchbar {
 width: 100%;
@@ -43,6 +44,10 @@ input[type=checkbox]:checked {
 #noBut {
     padding: 0;
 }
+#reset {
+    background: #403d39;
+    color: white;
+}
 
 
 /* posts  */
@@ -70,6 +75,7 @@ input[type=checkbox]:checked {
 .postItem h2 {
     align-self: center;
     margin-left: 20px;
+    color: #403d39;
 }
 .postItem div {
     min-width: 140px;

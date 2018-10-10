@@ -20,13 +20,19 @@ class Auth extends Component{
                     <button onClick={()=>{
                     axios.post('http://localhost:3001/api/login', 
                     {username:this.props.username, password:this.props.password})
-                    .then(res => {setProfile(res.data[0]); this.props.history.push('/dashboard'); });}}>Login</button>
+                    .then(res => {
+                        setProfile(res.data[0]); 
+                    this.props.history.push('/dashboard'); });}}>Login</button>
                 <button onClick={()=>{
                     axios.post('http://localhost:3001/api/register', 
                     {username:this.props.username, password:this.props.password})
                     .then(res => {
-                        setProfile(res.data[0].pic);
-                        this.props.history.push('/dashboard')
+                        if(res.data = 'exists'){
+                            console.log('user already exists')
+                        } else {
+                            setProfile(res.data[0]);
+                            this.props.history.push('/dashboard')
+                        }
                     })}}>Register</button>
                     </div>
                 </div>

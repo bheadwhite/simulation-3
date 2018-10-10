@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import axios from 'axios'
 import './form.css'
 
 class Form extends Component{
@@ -14,6 +15,14 @@ class Form extends Component{
             userId: this.props.userId,
             profilePic: this.props.profilePic
         }
+    }
+    postNew(){
+        const sending = {
+            title: this.state.title,
+            content: this.state.content,
+            img: this.state.imageUrl
+        }
+        axios.post(`/api/newPost/${this.state.userId}`, sending).then(resp => console.log(resp))
     }
     render(){
         console.log()
@@ -34,6 +43,9 @@ class Form extends Component{
                 <div className='newTitle'>
                     <h3>Content:</h3>
                     <textarea onChange={(e)=>this.setState({content: e.target.value})} value={this.state.content}></textarea>
+                </div>
+                <div>
+                    <button onClick={async ()=> {await this.postNew(); this.props.history.push('/dashboard')} }>Post</button>
                 </div>
 
             </div>

@@ -43,7 +43,7 @@ class Dashboard extends Component{
                         <button id='noBut' type='submit' onClick={(e)=>{this.handleSubmit(e)}}>
                             <Icon name='search' bordered inverted color='orange' />
                         </button>
-                        <button onClick={async (e)=> {await this.setState({searchQuery: ''}); this.getPosts()}}>reset</button>
+                        <button id='reset' onClick={async (e)=> {await this.setState({searchQuery: ''}); this.getPosts()}}>Reset</button>
                     </div>
                 </form>
                 <div className='check'>
