@@ -22,8 +22,10 @@ app.use(session({
 
 app.post('/api/register', controller.addUser )
 app.post('/api/login', controller.loginUser)
-app.post('/api/newPost/:id', controller.newPost)
-app.get('/api/posts/:id/', controller.getPosts)
-app.get('/api/post/:id', controller.getPostById)
+app.post('/api/newPost/', controller.newPost)
+app.get('/api/posts/', controller.getPosts)
+app.get('/api/post/', controller.getPostById)
+app.get('/api/auth/me', controller.auth)
+app.get('/api/logout/me', (req, res, next) => req.session.destroy())
 
 app.listen(3001, ()=> {console.log('server is running')})

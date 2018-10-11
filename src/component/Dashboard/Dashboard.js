@@ -24,9 +24,8 @@ class Dashboard extends Component{
     }
     
     async getPosts(){
-        const {userId} = this.props.state
         const {myPosts, searchQuery} = this.state
-       await axios.get(`http://localhost:3001/api/posts/${userId}/?userPosts=${myPosts}&search=${searchQuery}`).then(resp => {this.setState({posts: resp.data, searchQuery: ''}); this.props.setPosts(resp.data)}).catch(e => console.log(e))
+       await axios.get(`http://localhost:3001/api/posts/?userPosts=${myPosts}&search=${searchQuery}`).then(resp => {console.log(resp); this.setState({posts: resp.data, searchQuery: ''}); this.props.setPosts(resp.data)}).catch(e => console.log(e))
     }
 
     componentDidMount(){
