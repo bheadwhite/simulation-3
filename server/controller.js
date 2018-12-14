@@ -24,13 +24,11 @@ module.exports = {
     },
     loginUser: (req, res, next) => {
         const db = req.app.get('db');
-        console.log('loginuser')
         db.login_user([req.body.username, req.body.password])
-        .then(result => {
-            req.session.userId = result[0].id;
-            if(result[0]){
-                res.status(200).send(result)
-            } else { res.status(404).send(result)}
+        .then(user => {
+            req.session.user = user
+            req.session.save()
+            res.send(user).status(201)
         })
         .catch( err => {
             // console.log(err);
@@ -38,30 +36,30 @@ module.exports = {
         })
     },
     getPosts: (req, res, next) => {
-        const db = req.app.get('db')
         console.log(req.session)
-        const {userPosts, search} = req.query
-        if (userPosts == 'true' && search !== ''){
-            db.query(
-                `select u.id, u.username, u.pic, p.title, p.content, p.img, p.id as pid from helo_users as u join helo_posts as p on u.id = p.user_id where LOWER(p.title) like LOWER('%${search}%')`)
-            .then(resp => {res.status(200).send(resp)}).catch(e => console.log(e))
-       } else if (userPosts == 'false' && search == '') {
-        db.query(
-            `select u.id, u.username, u.pic, p.title, p.content, p.img, p.id as pid from helo_users as u join helo_posts as p on u.id = p.user_id where u.id != '${id}'`)
-        .then(resp => {res.status(200).send(resp)}).catch(e => console.log(e))
-       } else if (userPosts == 'false' && search !== '') {
-        db.query(
-            `select u.id, u.username, u.pic, p.title, p.content, p.img, p.id as pid from helo_users as u join helo_posts as p on u.id = p.user_id where u.id != '${id}' AND LOWER(p.title) like LOWER('%${search}%')`)
-        .then(resp => {res.status(200).send(resp)}).catch(e => console.log(e))
-       } else {
-           db.getPosts().then(resp => {res.status(200).send(resp)}).catch(e => console.log(e))
-       }
+    //     const db = req.app.get('db')
+    //     const {userPosts, search} = req.query
+
+    //     if (userPosts == 'true' && search !== ''){
+    //         db.query(
+    //             `select u.id, u.username, u.pic, p.title, p.content, p.img, p.id as pid from helo_users as u join helo_posts as p on u.id = p.user_id where LOWER(p.title) like LOWER('%${search}%')`)
+    //         .then(resp => {res.status(200).send(resp)}).catch(e => console.log(e))
+    //    } else if (userPosts == 'false' && search == '') {
+    //     db.query(
+    //         `select u.id, u.username, u.pic, p.title, p.content, p.img, p.id as pid from helo_users as u join helo_posts as p on u.id = p.user_id where u.id != '${id}'`)
+    //     .then(resp => {res.status(200).send(resp)}).catch(e => console.log(e))
+    //    } else if (userPosts == 'false' && search !== '') {
+    //     db.query(
+    //         `select u.id, u.username, u.pic, p.title, p.content, p.img, p.id as pid from helo_users as u join helo_posts as p on u.id = p.user_id where u.id != '${id}' AND LOWER(p.title) like LOWER('%${search}%')`)
+    //     .then(resp => {res.status(200).send(resp)}).catch(e => console.log(e))
+    //    } else {
+    //        db.getPosts().then(resp => {res.status(200).send(resp)}).catch(e => console.log(e))
+    //    }
     },
     getPostById: (req, res, next) => {
-        console.log('getPostbyid')
         const db = req.app.get('db')
         db.query(
-            `select u.username, u.pic, p.id, p.title, p.img, p.content from helo_users as u inner join helo_posts as p on u.id = p.user_id where p.id = ${req.session.userId} `
+            `select u.username, u.pic, p.id, p.title, p.img, p.content from helo_users as u inner join helo_posts as p on u.id = p.user_id where p.id = ${req.params.id} `
         ).then( resp => res.status(200).send(resp))
     },
     newPost: (req, res, next) => {
@@ -76,7 +74,6 @@ module.exports = {
     },
     auth: (req, res, next) => {
         const db = req.app.get('db')
-console.log(req.session)
         db.helo_users.find({
            id: req.session.userId 
         }).then(resp => res.status(200).send(resp)) 

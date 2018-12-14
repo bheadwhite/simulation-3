@@ -11,6 +11,7 @@ const _FULFILLED =      '_FULFILLED'
 // _REJECTED      = '_REJECTED';
 
 const initialState = {
+    id: '',
     username: '',
     password: '',
     profilePic: '',
@@ -66,7 +67,7 @@ export function setPosts(data){
 }
 
 export function setPost(id){
-    const post = axios.get(`/api/post/${id}`)
+    const post = axios.get(`http://localhost:3001/api/post/${id}`)
     return {
         type: SET_POST,
         payload: post

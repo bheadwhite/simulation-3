@@ -17,12 +17,13 @@ class Auth extends Component{
                 Username: <input type="text" onChange={(e)=>setUser(e.target.value)}></input><br />
                 Password: <input type="password" onChange={(e)=>setPassword(e.target.value)}></input><br />
                 <div className="buttons">
-                    <button onClick={()=>{
-                    axios.post('http://localhost:3001/api/login', 
-                    {username:this.props.username, password:this.props.password})
+                    <button onClick={()=>{console.log(this.props);
+                    axios.post('http://localhost:3001/api/login',{ username:this.props.username, password:this.props.password})
                     .then(res => {
-                        setProfile(res.data[0]); 
-                    this.props.history.push('/dashboard'); });}}>Login</button>
+                        console.log(res.data)
+                        setProfile(res.data);
+                        this.props.history.push('/dashboard'); 
+                    });}}>Login</button>
                 <button onClick={()=>{
                     axios.post('http://localhost:3001/api/register', 
                     {username:this.props.username, password:this.props.password})

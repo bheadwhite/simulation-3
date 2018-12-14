@@ -25,7 +25,7 @@ class Dashboard extends Component{
     
     async getPosts(){
         const {myPosts, searchQuery} = this.state
-       await axios.get(`http://localhost:3001/api/posts/?userPosts=${myPosts}&search=${searchQuery}`).then(resp => {console.log(resp); this.setState({posts: resp.data, searchQuery: ''}); this.props.setPosts(resp.data)}).catch(e => console.log(e))
+        await axios.get(`http://localhost:3001/api/posts/?userPosts=${myPosts}&search=${searchQuery}`).then(resp => {this.setState({posts: resp.data, searchQuery: ''}); this.props.setPosts(resp.data)}).catch(e => console.log(e))
     }
 
     componentDidMount(){
@@ -56,10 +56,12 @@ class Dashboard extends Component{
             {
                 this.state.posts.map(p => {
                     return (
-                        <Link key={p.pid} to={`/post/${p.pid}`}><div className='postItem' onClick={()=> {this.props.setPost(p.pid)}}>
-                        <h2>{p.title}</h2>
-                           <div><p>by {p.username}</p><img src={p.pic} alt={p.username} /></div>
-                        </div></Link>
+                        <Link key={p.pid} to={`/post/${p.pid}`}>
+                            <div className='postItem' onClick={()=> {console.log(p.pid);this.props.setPost(p.pid)}}>
+                                <h2>{p.title}</h2>
+                                <div><p>by {p.username}</p><img src={p.pic} alt={p.username} /></div>
+                            </div>
+                        </Link>
                     )
                 })
             }
