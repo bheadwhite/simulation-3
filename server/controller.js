@@ -74,8 +74,13 @@ module.exports = {
     },
     auth: (req, res, next) => {
         const db = req.app.get('db')
-        db.helo_users.find({
-           id: req.session.userId 
-        }).then(resp => res.status(200).send(resp)) 
+        if(req.session && req.session.userId){
+            db.helo_users.find({id: req.session.userId})
+            .then(resp => res.status(200).send(resp))
+            .catch(e => console.log(e))
+        } else {
+            res.send('no session userId')
+        }
+
     }
 }

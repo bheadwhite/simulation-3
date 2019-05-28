@@ -1,21 +1,21 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const controller = require('./controller');
-const app = express()
+const express = require('express'),
+    bodyParser = require('body-parser'),
+    controller = require('./controller'),
+    app = express(),
+    massive = require('massive'),
+    cors =require('cors'),
+    cookieParser = require('cookie-parser'),
+    session = require('express-session')
 require('dotenv').config()
-const massive = require('massive')
-const cors =require('cors')
-const cookieParser = require('cookie-parser')
-const session = require('express-session')
 
-app.use(cors(), cookieParser(), bodyParser.json(),session({
+app.use(cors(), cookieParser(), bodyParser.json(), session({
     secret: process.env.SECRET,
     saveUninitialized: true,
-    resave: false,
+    resave: true,
     cookie: { secure: true }
 }))
 
-massive(process.env.CONNECTIONSTRINGGG).then(db =>{
+massive(process.env.CONNECTION_STRING).then(db =>{
     app.set('db', db)
     console.log('db is connected')
 })
@@ -29,4 +29,5 @@ app.get('/api/post/:id', controller.getPostById)
 app.get('/api/auth/me', controller.auth)
 app.get('/api/logout/me', (req, res, next) => req.session.destroy())
 
-app.listen(3001, ()=> {console.log('server is running')})
+const port = 3001
+app.listen(port, ()=> {console.log(`server is running on ${port}`)})

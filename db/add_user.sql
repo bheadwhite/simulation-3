@@ -1,1 +1,1 @@
-insert into helo_users (username, password, pic) values ($1, $2, $3) returning * ;
+insert into helo_users (username, password, pic) values ($1, $2, $3)

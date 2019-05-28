@@ -8,16 +8,17 @@ import axios from 'axios'
 import './nav.css'
 
 class Nav extends Component {
-    constructor(props){
-        super(props)
-        this.state={
+    state={
 
-        }
     }
 
     componentDidMount(){
-        axios.get('http://localhost:3001/api/auth/me').then(resp => console.log(resp))
+        axios.get('/api/auth/me')
+        .then(resp => {
+            // console.log(resp)
+        })
     }
+
     render(){
     const styles = {
         icon: {

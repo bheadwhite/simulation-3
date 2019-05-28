@@ -23,5 +23,6 @@ yarn-error.log*
 # Secrets 
 .env 
 config.js
+.vscode
 
 package-lock.json
