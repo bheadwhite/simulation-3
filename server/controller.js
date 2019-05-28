@@ -1,18 +1,14 @@
 module.exports = {
     addUser: (req, res, next) => {
-        const db = req.app.get('db');
-        console.log('adduser')
-        // does user exist?
-        db.helo_users.find({
-            username: req.body.username
-        }).then(resp => {
+        const db = req.app.get('db')
+        db.helo_users.find({ username: req.body.username })
+        .then(resp => {
             if(resp.length >= 1){
-                res.send('exist')
+                res.send({ exists: true, user:resp[0].username })
             } else {
-              db.add_user([req.body.username, req.body.password, `https://robohash.org/${req.body.username}`])
+            db.helo_users.insert({ username:req.body.username, password: req.body.password, pic:`https://robohash.org/${req.body.username}`})
                 .then(result => { 
-                    const data = req.session
-                    data.userId = result[0].id
+                    console.log(result)
                     res.status(201).send(result);})
                 .catch( err => {
                     console.log(err);
@@ -20,6 +16,7 @@ module.exports = {
                 })
             }
         })
+        .catch(err => console.log(err))
 
     },
     loginUser: (req, res, next) => {
