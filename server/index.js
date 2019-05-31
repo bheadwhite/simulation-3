@@ -23,14 +23,22 @@ app.use(
     })
 )
 
+const isAuthenticated = (req, res, next) => {
+    if(!req.session.user){
+        res.send({ unathenticated: !req.session.user })
+    } else {
+        next()
+    }
+}
 //express.static will serve up the front end through the server.
 
-app.post('/api/register', controller.addUser )
-app.post('/api/login', controller.loginUser)
-app.post('/api/newPost/', controller.newPost)
-app.get('/api/posts/', controller.getPosts)
+app.post('/api/register', controller.register )
+app.post('/api/login', controller.login)
+app.post('/api/newPost', isAuthenticated, controller.newPost)
+app.get('/api/posts', isAuthenticated, controller.getPosts)
 app.get('/api/post/:id', controller.getPostById)
 app.get('/api/auth/me', controller.auth)
 app.get('/api/logout/me', (req, res, next) => req.session.destroy())
 
-app.listen(port, ()=> {console.log(`server is running on ${port}`)})
+app.listen(port, ()=> { console.log(`server is running on ${port}`)})
+

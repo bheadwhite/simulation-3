@@ -1,8 +1,6 @@
 import axios from 'axios'
 
-const SET_USERNAME =    'SET_USERNAME'
-const SET_PASSWORD =    'SET_PASSWORD'
-const SET_PIC =         'SET_PIC'
+const SET_USER =        'SET_USER'
 const SET_POSTS =       'SET_POSTS'
 const SET_POST =        'SET_POST'
 const RESET =           'RESET'
@@ -10,72 +8,51 @@ const _FULFILLED =      '_FULFILLED'
 // ,_PENDING       = '_PENDING'
 // _REJECTED      = '_REJECTED';
 
-const initialState = {
-    id: '',
-    username: '',
-    password: '',
-    profilePic: '',
-    myPosts: [],
-    myPost: {}
-}
+// const initialState = {
+//     user: {},
+//     myPosts: [],
+//     myPost: {}
+// }
 
-export default function reducer(state=initialState, action){
-    switch(action.type){
-        case SET_USERNAME:
-            return Object.assign({}, state, {username: action.payload})
-        case SET_PASSWORD:
-            return Object.assign({}, state, {password: action.payload})
-        case SET_PIC: 
-            return Object.assign({}, state, {profilePic: action.payload.pic})
-        case SET_POSTS: 
-            return Object.assign({}, state, {myPosts: action.payload})
-        case SET_POST + _FULFILLED: 
-            return Object.assign({}, state, {myPost: action.payload.data[0]})
-        case RESET: 
-            return Object.assign({}, initialState)
-        default:
-            return state
-    }
-}
+// export default function reducer(state=initialState, action){
+//     switch(action.type){
+//         case SET_USER:
+//             return Object.assign({}, state, { user: action.payload })
+//         case SET_POSTS: 
+//             return Object.assign({}, state, {myPosts: action.payload})
+//         case SET_POST + _FULFILLED: 
+//             return Object.assign({}, state, {myPost: action.payload.data[0]})
+//         case RESET: 
+//             return Object.assign({}, initialState)
+//         default:
+//             return state
+//     }
+// }
 
-export function setUser(user){
-    return {
-        type: SET_USERNAME,
-        payload: user
-    }
-}
+// export function setUser(user){
+//     return {
+//         type: SET_USER,
+//         payload: user
+//     }
+// }
 
-export function setPassword(pass){
-    return {
-        type: SET_PASSWORD,
-        payload: pass
-    }
-}
+// export function setPosts(data){
+//     return {
+//         type: SET_POSTS,
+//         payload: data
+//     }
+// }
 
-export function setProfile(data){
-    return {
-        type: SET_PIC,
-        payload: data
-    }
-}
+// export function setPost(id){
+//     const post = axios.get(`/api/post/${id}`)
+//     return {
+//         type: SET_POST,
+//         payload: post
+//     }
+// }
 
-export function setPosts(data){
-    return {
-        type: SET_POSTS,
-        payload: data
-    }
-}
-
-export function setPost(id){
-    const post = axios.get(`http://localhost:3001/api/post/${id}`)
-    return {
-        type: SET_POST,
-        payload: post
-    }
-}
-
-export function reset(){
-    return {
-        type: RESET
-    }
-}
+// export function reset(){
+//     return {
+//         type: RESET
+//     }
+// }

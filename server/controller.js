@@ -1,57 +1,73 @@
+const bcrypt = require('bcrypt')
+const saltRounds = 10
+
 module.exports = {
-    addUser: (req, res, next) => {
+    register: (req, res, next) => {
         const db = req.app.get('db')
-        db.helo_users.find({ username: req.body.username })
-        .then(resp => {
-            if(resp.length >= 1){
-                res.send({ exists: true, user:resp[0].username })
+        const { username , password} = req.body
+        db.helo_users.findOne({ username })
+        .then(user => {
+            if(user){
+                throw('Sorry this username already exists. Please login.')
             } else {
-            db.helo_users.insert({ username:req.body.username, password: req.body.password, pic:`https://robohash.org/${req.body.username}`})
-                .then(result => { 
-                    console.log(result)
-                    res.status(201).send(result);})
-                .catch( err => {
-                    console.log(err);
-                    res.status(500).send(err)
+                //make new user
+                // encrypt password
+                return bcrypt.hash(password, saltRounds)
+                .then(hash => {
+                    //create a new user with hashed password
+                    const newUser = {
+                        username: username,
+                        password: hash,
+                        pic: `https://robohash.org/${username}`
+                    }
+                    //insert into db
+                    db.helo_users.insert(newUser)
+                    .then(user => {
+                        //delete password
+                        delete user.password;
+                        //assign user to session
+                        req.session.user = user
+                        res.status(201).send(user)
+                    })
                 })
             }
         })
-        .catch(err => console.log(err))
-
-    },
-    loginUser: (req, res, next) => {
-        const db = req.app.get('db');
-        db.login_user([req.body.username, req.body.password])
-        .then(user => {
-            req.session.user = user
-            req.session.save()
-            res.send(user).status(201)
+        .catch(err => {
+            res.send(err)
         })
-        .catch( err => {
-            // console.log(err);
-            res.status(500).send(err), console.log(err)
+    },
+    login: (req, res, next) => {
+        const db = req.app.get('db');
+        const { username, password } = req.body
+        
+        db.helo_users.findOne({username})
+        .then(user => {
+            if(!user){
+                throw('No user found with that name. Please Register')
+            } else {
+                //check password
+                bcrypt.compare(password, user.password)
+                .then(correctPassword => {
+                    if(correctPassword){
+                        delete password
+                        req.session.user = user
+                        res.send(user)
+                    }
+                })
+            }
+        })
+        .catch(err => {
+            res.send(err)
         })
     },
     getPosts: (req, res, next) => {
-        console.log(req.session)
-    //     const db = req.app.get('db')
-    //     const {userPosts, search} = req.query
+        const db = req.app.get('db')
+        db.getAllPosts()
+        .then(resp => {
+            res.send(resp)
+        })
+        .catch(e => console.log(e))
 
-    //     if (userPosts == 'true' && search !== ''){
-    //         db.query(
-    //             `select u.id, u.username, u.pic, p.title, p.content, p.img, p.id as pid from helo_users as u join helo_posts as p on u.id = p.user_id where LOWER(p.title) like LOWER('%${search}%')`)
-    //         .then(resp => {res.status(200).send(resp)}).catch(e => console.log(e))
-    //    } else if (userPosts == 'false' && search == '') {
-    //     db.query(
-    //         `select u.id, u.username, u.pic, p.title, p.content, p.img, p.id as pid from helo_users as u join helo_posts as p on u.id = p.user_id where u.id != '${id}'`)
-    //     .then(resp => {res.status(200).send(resp)}).catch(e => console.log(e))
-    //    } else if (userPosts == 'false' && search !== '') {
-    //     db.query(
-    //         `select u.id, u.username, u.pic, p.title, p.content, p.img, p.id as pid from helo_users as u join helo_posts as p on u.id = p.user_id where u.id != '${id}' AND LOWER(p.title) like LOWER('%${search}%')`)
-    //     .then(resp => {res.status(200).send(resp)}).catch(e => console.log(e))
-    //    } else {
-    //        db.getPosts().then(resp => {res.status(200).send(resp)}).catch(e => console.log(e))
-    //    }
     },
     getPostById: (req, res, next) => {
         const db = req.app.get('db')

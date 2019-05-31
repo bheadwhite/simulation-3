@@ -1,36 +1,56 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-import {setPosts, setPost} from './../../ducks/reducer'
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import store, { UPDATE_POSTS } from './../../ducks/store'
 import axios from 'axios'
 
-import {Icon} from 'semantic-ui-react'
+import { Icon } from 'semantic-ui-react'
 import './dashboard.css'
 
 
-class Dashboard extends Component{
+class Dashboard extends Component {
     constructor(){
         super()
+        const reduxState = store.getState()
         this.state = {
             myPosts: true,
             searchQuery: '',
-            posts: []
+            posts: reduxState.posts
         }
     }
+    componentDidMount(){
+        axios.get('/api/posts')
+        .then(resp=> {
+            console.log(resp)
+            if (resp.data.unathenticated){
+                this.props.history.push('/')
+            } else {
+                store.dispatch({
+                    type: UPDATE_POSTS,
+                    payload: resp.data
+                })
+            }
+        })
+    }
 
-    handleSubmit(e){
+    handleSubmit = (e) => {
         e.preventDefault()
         this.getPosts()
     }
     
-    async getPosts(){
-        const {myPosts, searchQuery} = this.state
-        await axios.get(`http://localhost:3001/api/posts?userPosts=${myPosts}&search=${searchQuery}`).then(resp => {this.setState({posts: resp.data, searchQuery: ''}); this.props.setPosts(resp.data)}).catch(e => console.log(e))
+    getPosts = () => {
+        const { myPosts, searchQuery } = this.state
+        axios.get(`/api/posts?userPosts=${myPosts}&search=${searchQuery}`)
+        .then(resp => {
+            this.setState({ posts: resp.data, searchQuery: ''})
+            this.props.setPosts(resp.data)})
+        .catch(e => console.log(e))
     }
 
-    componentDidMount(){
-        this.getPosts(this.state.myPosts, this.state.searchQuery)
+    setPost = (p) => {
+        console.log(p.pid)
+        this.props.setPost(p.pid)
     }
+
 
     render(){
         return (
@@ -50,38 +70,38 @@ class Dashboard extends Component{
                     <input type="checkbox" className='checkbox' checked={this.state.myPosts} onChange={()=> {this.setState({myPosts: !this.state.myPosts})}} />
                 </div>
             </div>
-
-
+            
             <div className="posts">
-            {
-                this.state.posts.map(p => {
-                    return (
-                        <Link key={p.pid} to={`/post/${p.pid}`}>
-                            <div className='postItem' onClick={()=> {console.log(p.pid);this.props.setPost(p.pid)}}>
-                                <h2>{p.title}</h2>
-                                <div><p>by {p.username}</p><img src={p.pic} alt={p.username} /></div>
+            {this.state.posts.length > 1 && this.state.posts.map(p => {
+                return (
+                    <Link key={p.pid} to={`/post/${p.pid}`}>
+                        <div className='postItem' onClick={()=>this.setPost(p)}>
+                            <h2>{p.title}</h2>
+                            <div>
+                                <p>by {p.username}</p>
+                                <img src={p.pic} alt={p.username} />
                             </div>
-                        </Link>
-                    )
-                })
-            }
+                        </div>
+                    </Link>
+                )})}
             </div>
         </div>
         )
     }
 }
-function mapStateToProps(state){
-    return {
-        myPosts: state.myPosts,
-        state
-    }
-}
+// function mapStateToProps(state){
+//     return {
+//         myPosts: state.myPosts,
+//         state
+//     }
+// }
 
-const mapDispatchToProps = () => {
-    return {
-        setPosts,
-        setPost
-    }
-}
+// const mapDispatchToProps = () => {
+//     return {
+//         setPosts,
+//         setPost
+//     }
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps())(Dashboard)
+// export default connect(mapStateToProps, mapDispatchToProps())(Dashboard)
+export default Dashboard
