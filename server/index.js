@@ -25,7 +25,7 @@ app.use(
 
 const isAuthenticated = (req, res, next) => {
     if(!req.session.user){
-        res.send({ unathenticated: !req.session.user })
+        res.send({ authenticated: req.session.user })
     } else {
         next()
     }

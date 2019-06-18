@@ -8,18 +8,18 @@ import './nav.css'
 class Nav extends Component {
     constructor(){
         super()
-        const reduxState = store.getState()
+        const {user} = store.getState()
         this.state = {
-            username: reduxState.user.username,
-            profilePic: reduxState.user.pic
+            username: user.username,
+            profilePic: user.pic
         }
     }
     componentDidMount(){
         store.subscribe(() => {
-            const reduxState = store.getState()
+            const {user} = store.getState()
             this.setState({
-                username: reduxState.user.username,
-                profilePic: reduxState.user.pic
+                username: user.username,
+                profilePic: user.pic
             })
         })
         // axios.get('/api/auth/me')
@@ -34,11 +34,10 @@ class Nav extends Component {
     }
 
     render(){
-        console.log(this.props)
         const styles = {
             icon: { margin: '15px 5px 30px 5px' },
             edit: { paddingLeft: '8px' },
-            power: { marginBottom: '39px' }
+            power: { margin: '0 auto 39px' }
         }
         if(this.props.location.pathname === '/'){
             return null
