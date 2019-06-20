@@ -1,6 +1,5 @@
-import React, {Component} from 'react'
-// import { connect } from 'react-redux'
-import store, { UPDATE_USER, UPDATE_POSTS } from './../../ducks/store'
+import React, { Component } from 'react'
+import store, { UPDATE_USER } from './../../ducks/store'
 import axios from 'axios'
 import './auth.css'
 
@@ -32,11 +31,11 @@ class Auth extends Component {
     register = () => {
         const { username, password } = this.state
         axios.post('/api/register', { username, password })
-        .then(res => {
-            if(res.data.id){
+        .then(({data})=> {
+            if(data.id){
                 console.log('thanks for registering')
             } else {
-                console.log(res.data)
+                console.log(data)
             }
         })
     }
@@ -55,6 +54,7 @@ class Auth extends Component {
                                 value={this.state.username} 
                                 onChange={this.inputHandler} />
                             <br />
+                            <div className="error">{}</div>
                             Password: 
                             <input 
                                 type="password" 

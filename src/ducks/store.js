@@ -33,7 +33,7 @@ function reducer( state = initialState, action ){
   switch( type ){
       case UPDATE_USER:
           return { ...state, user: payload }
-      case UPDATE_POSTS: 
+      case UPDATE_POSTS:
           return { ...state, posts: payload }
       case UPDATE_POST + _FULFILLED: 
           return { ...state, myPost: payload }
