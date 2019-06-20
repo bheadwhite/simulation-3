@@ -1,5 +1,4 @@
 import React from "react";
-import { Icon } from "semantic-ui-react";
 
 const search = props => {
 	return (
@@ -12,17 +11,6 @@ const search = props => {
 					onChange={props.change}
 					value={props.searchQuery}
 				/>
-				<button
-					id="noBut"
-					type="submit"
-					onClick={e => {
-						this.handleSubmit(e);
-					}}>
-					<Icon name="search" bordered inverted color="orange" />
-				</button>
-				<button id="reset" onClick={props.reset}>
-					Reset
-				</button>
 			</div>
 			<div className="check">
 				<label htmlFor="myPosts">My Posts</label>

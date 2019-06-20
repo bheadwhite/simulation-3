@@ -5,14 +5,14 @@ const express = require("express"),
 	massive = require("massive"),
 	cors = require("cors"),
 	cookieParser = require("cookie-parser"),
-	session = require("express-session");
-require("dotenv").config();
+	session = require("express-session")
+require("dotenv").config()
 
-const port = process.env.SERVER_PORT || 3001;
+const port = process.env.SERVER_PORT || 3001
 
 massive(process.env.CONNECTION_STRING)
 	.then(db => app.set("db", db))
-	.catch(err => console.log(err));
+	.catch(err => console.log(err))
 
 app.use(
 	cors(),
@@ -25,27 +25,28 @@ app.use(
 			maxAge: 60000
 		}
 	})
-);
+)
 
 //express.static will serve up the front end through the server.
 
-app.post("/api/register", controller.register);
-app.post("/api/login", controller.login);
+app.post("/api/register", controller.register)
+app.post("/api/login", controller.login)
 
 app.use((req, res, next) => {
 	if (!req.session.user) {
-		res.send(false);
+		res.send(false)
 	} else {
-		next();
+		next()
 	}
-});
+})
 
-app.post("/api/newPost/:id", controller.newPost);
-app.get("/api/posts", controller.getPosts);
-app.get("/api/post/:id", controller.getPostById);
-app.get("/api/auth/me", controller.auth);
-app.get("/api/logout", controller.logout);
+app.post("/api/newPost/:id", controller.newPost)
+app.delete('/api/post/:id', controller.deletePost)
+app.get("/api/posts", controller.getPosts)
+app.get("/api/post/:id", controller.getPostById)
+app.get("/api/auth/me", controller.auth)
+app.get("/api/logout", controller.logout)
 
 app.listen(port, () => {
-	console.log(`server is running on ${port}`);
-});
+	console.log(`server is running on ${port}`)
+})

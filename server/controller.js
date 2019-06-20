@@ -86,6 +86,11 @@ module.exports = {
 			})
 			.catch(e => console.log(e));
 	},
+	deletePost: (req, res) => {
+		const db = req.app.get('db')
+		const { id } = req.params
+		
+	},
 	auth: (req, res, next) => {
 		if (req.session.user) {
 			res.send(req.session.user);
