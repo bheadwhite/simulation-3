@@ -1,0 +1,45 @@
+.Post {
+  box-shadow: 0 0 5px grey;
+  background: white;
+  justify-content: space-between;
+  padding: 20px;
+  margin: 2rem auto auto;
+  width: 100%;
+}
+.Post .header {
+  display: flex;
+  justify-content: space-between
+}
+.Post .picEnd {
+  display: flex;
+}
+.Post .picEnd img {
+  height: 100px;
+}
+.Post .picEnd p {
+  margin-top: auto;
+}
+.Post .header h1 {
+  font-size: 4rem;
+  color: orange;
+  margin-top: auto;
+}
+.content {
+  display: flex;
+  margin: 2rem;
+}
+.content .pic {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  width: 50%;
+  text-align: center;
+}
+
+.description {
+  align-self: start;
+  font-size: 1.75rem;
+  margin-left: 2rem;
+  text-align: left;
+}
+

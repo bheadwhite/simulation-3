@@ -11,6 +11,7 @@ export const UPDATE_POSTS =    'UPDATE_POSTS'
 export const UPDATE_POST =     'UPDATE_POST'
 export const RESET =           'RESET'
 export const _FULFILLED =      '_FULFILLED'
+
 // ,_PENDING =                 '_PENDING'
 // _REJECTED =                 '_REJECTED';
 

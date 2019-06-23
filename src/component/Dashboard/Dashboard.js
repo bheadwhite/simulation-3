@@ -31,18 +31,18 @@ class Dashboard extends Component {
 			})
 		})
 	}
-	componentDidUpdate(prevProps, prevState){
+	componentDidUpdate(prevProps, prevState) {
 		const query = prevState.searchQuery !== this.state.searchQuery
 		const myPosts = prevState.myPosts !== this.state.myPosts
-		if(query || myPosts){
+		if (query || myPosts) {
 			this.updatePosts()
 		}
 	}
 
 	updatePosts = () => {
 		let posts = this.props.posts.filter(post => post.title.toLowerCase().includes(this.state.searchQuery.toLowerCase()))
-		if (this.state.myPosts){
-			posts = posts.filter(post => post.id === this.props.user.id )
+		if (this.state.myPosts) {
+			posts = posts.filter(post => post.id === this.props.user.id)
 		}
 		this.setState({
 			posts
@@ -78,12 +78,17 @@ class Dashboard extends Component {
 		}
 	}
 	render() {
-		console.log(this.state.posts)
-		const {searchQuery, myPosts} = this.state
+		const { searchQuery, myPosts } = this.state
 		const posts = searchQuery || myPosts ? this.state.posts : null || this.props.posts
 		return (
-			<div className='container'>
-				<Search change={this.handleChange} searchQuery={this.state.searchQuery} myPosts={this.state.myPosts} reset={this.reset} handleSubmit={this.handleSubmit}/>
+			<div className='viewContainer'>
+				<Search
+					change={this.handleChange}
+					searchQuery={this.state.searchQuery}
+					myPosts={this.state.myPosts}
+					reset={this.reset}
+					handleSubmit={this.handleSubmit}
+				/>
 				<div className='posts'>
 					{posts &&
 						posts.map(({ pid, title, username, pic }) => {
@@ -106,3 +111,4 @@ class Dashboard extends Component {
 }
 
 export default connect(state => state)(Dashboard)
+//props
