@@ -6,6 +6,11 @@
     justify-content: space-between;
     padding: 20px;
 }
+.postItem .postId {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 2rem;
+}
 .searchbar input {
     width: 450px;
     margin-right: 0;

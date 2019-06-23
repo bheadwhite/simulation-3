@@ -96,7 +96,7 @@ class Dashboard extends Component {
 								<Link key={pid} to={`/post/${pid}`}>
 									<div className='postItem'>
 										<h2>{title}</h2>
-										<div>
+										<div className="postId">
 											<p>by {username}</p>
 											<img src={pic} alt={username} />
 										</div>
