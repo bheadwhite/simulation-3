@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-// import { connect } from 'react-redux'
-import store, { UPDATE_USER, UPDATE_POSTS } from './../../ducks/store'
+import store, { UPDATE_USER } from './../../ducks/store'
 import axios from 'axios'
 import './auth.css'
 
@@ -21,46 +20,47 @@ class Auth extends Component {
     login = () => {
         const { username, password } = this.state
         axios.post('/api/login', { username, password })
-            .then(res => {
-                store.dispatch({
-                    type: UPDATE_USER,
-                    payload: res.data
-                }, this.props.history.push('/dashboard'))
-            })
+        .then(res => {
+            store.dispatch({
+                type: UPDATE_USER,
+                payload: res.data
+            }, this.props.history.push('/dashboard'))
+        })
     }
 
     register = () => {
         const { username, password } = this.state
         axios.post('/api/register', { username, password })
-            .then(res => {
-                if (res.data.id) {
-                    console.log('thanks for registering')
-                } else {
-                    console.log(res.data)
-                }
-            })
+        .then(({data})=> {
+            if(data.id){
+                console.log('thanks for registering')
+            } else {
+                console.log(data)
+            }
+        })
     }
     render() {
         return (
             <div className="background">
                 <div className="auth-div">
                     <div className="auth-border">
-                        <img src={heloImg} alt="logo" />
+                        <img src={heloImg} alt="logo"/>
                         <h1>Helo</h1>
                         <div>
-                            Username:
-                            <input
-                                type="text"
-                                name="username"
-                                value={this.state.username}
+                            Username: 
+                            <input 
+                                type="text" 
+                                name="username" 
+                                value={this.state.username} 
                                 onChange={this.inputHandler} />
                             <br />
-                            Password:
-                            <input
-                                type="password"
-                                name="password"
-                                value={this.state.password}
-                                onChange={this.inputHandler} />
+                            <div className="error">{}</div>
+                            Password: 
+                            <input 
+                                type="password" 
+                                name="password" 
+                                value={this.state.password} 
+                                onChange={this.inputHandler}/>
                             <br />
                             <div className="buttons">
                                 <button onClick={this.login}>Login</button>

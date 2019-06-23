@@ -1,123 +1,114 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import store, { UPDATE_POSTS } from './../../ducks/store'
-import axios from 'axios'
+import React, { Component } from "react"
+import { Link } from "react-router-dom"
+import { connect } from "react-redux"
+import store, { UPDATE_POSTS, UPDATE_USER } from "./../../ducks/store"
+import Search from "../Search/Search"
+import axios from "axios"
 
-import { Icon } from 'semantic-ui-react'
-import './dashboard.css'
-
+import "./dashboard.css"
 
 class Dashboard extends Component {
-    constructor() {
-        super()
-        const reduxState = store.getState()
-        this.state = {
-            myPosts: true,
-            searchQuery: '',
-            posts: reduxState.posts
-        }
-    }
-    componentDidMount() {
-        axios.get('/api/posts')
-            .then(resp => {
-                if (resp.data.authenticated) {
-                    this.props.history.push('/')
-                } else {
-                    store.dispatch({
-                        type: UPDATE_POSTS,
-                        payload: resp.data
-                    })
-                }
-            })
-    }
+	state = {
+		myPosts: false,
+		searchQuery: "",
+		posts: []
+	}
+	componentDidMount() {
+		if (!this.props.user.username) {
+			axios.get("/api/auth/me").then(({ data }) => {
+				data
+				? store.dispatch({
+					type: UPDATE_USER,
+							payload: data
+					  })
+					: this.props.history.push("/")
+			})
+		}
+		axios.get("/api/posts").then(({ data }) => {
+			store.dispatch({
+				type: UPDATE_POSTS,
+				payload: data
+			})
+		})
+	}
+	componentDidUpdate(prevProps, prevState) {
+		const query = prevState.searchQuery !== this.state.searchQuery
+		const myPosts = prevState.myPosts !== this.state.myPosts
+		if (query || myPosts) {
+			this.updatePosts()
+		}
+	}
 
-    handleSubmit = (e) => {
-        e.preventDefault()
-        this.getPosts()
-    }
+	updatePosts = () => {
+		let posts = this.props.posts.filter(post => post.title.toLowerCase().includes(this.state.searchQuery.toLowerCase()))
+		if (this.state.myPosts) {
+			posts = posts.filter(post => post.id === this.props.user.id)
+		}
+		this.setState({
+			posts
+		})
+	}
+	reset = e => {
+		e.preventDefault()
+		this.setState({
+			myPosts: true,
+			searchQuery: ""
+		})
+	}
 
-    getPosts = () => {
-        const { myPosts, searchQuery } = this.state
-        axios.get(`/api/posts?userPosts=${myPosts}&search=${searchQuery}`)
-            .then(resp => {
-                this.setState({ posts: resp.data, searchQuery: '' })
-                this.props.setPosts(resp.data)
-            })
-            .catch(e => console.log(e))
-    }
-
-    setPost = (p) => {
-        console.log(p.pid)
-        this.props.setPost(p.pid)
-    }
-
-
-    render() {
-        return (
-            <div className='container'>
-                <div className='dashSearch'>
-                    <form>
-                        <div className="searchbar">
-                            <input 
-                                type='text' 
-                                placeholder='Search by Title' 
-                                onChange={(e) => { this.setState({ searchQuery: e.target.value }) }} 
-                                value={this.state.searchQuery}></input>
-                            <button 
-                                id='noBut' 
-                                type='submit' 
-                                onClick={(e) => { this.handleSubmit(e) }}>
-                                <Icon 
-                                    name='search' 
-                                    bordered 
-                                    inverted 
-                                    color='orange' />
-                            </button>
-                            <button id='reset' onClick={async (e) => { await this.setState({ searchQuery: '' }); this.getPosts() }}>Reset</button>
-                        </div>
-                    </form>
-                    <div className='check'>
-                        <label htmlFor="myPosts">My Posts</label>
-                        <input 
-                            type="checkbox" 
-                            className='checkbox' 
-                            checked={this.state.myPosts} 
-                            onChange={() => { this.setState({ myPosts: !this.state.myPosts }) }} />
-                    </div>
-                </div>
-
-                <div className="posts">
-                    {this.state.posts.length > 1 && this.state.posts.map(p => {
-                        return (
-                            <Link key={p.pid} to={`/post/${p.pid}`}>
-                                <div className='postItem' onClick={() => this.setPost(p)}>
-                                    <h2>{p.title}</h2>
-                                    <div>
-                                        <p>by {p.username}</p>
-                                        <img src={p.pic} alt={p.username} />
-                                    </div>
-                                </div>
-                            </Link>
-                        )
-                    })}
-                </div>
-            </div>
-        )
-    }
+	getPosts = () => {
+		const { myPosts, searchQuery } = this.state
+		axios
+			.get(`/api/posts?userPosts=${myPosts}&search=${searchQuery}`)
+			.then(resp => {
+				this.setState({ posts: resp.data, searchQuery: "" })
+				this.props.setPosts(resp.data)
+			})
+			.catch(e => console.log(e))
+	}
+	handleChange = e => {
+		if (e.target.name === "myPosts") {
+			this.setState({
+				[e.target.name]: !this.state.myPosts
+			})
+		} else {
+			this.setState({
+				[e.target.name]: e.target.value
+			})
+		}
+	}
+	render() {
+		const { searchQuery, myPosts } = this.state
+		const posts = searchQuery || myPosts ? this.state.posts : null || this.props.posts
+		return (
+			<div className='viewContainer'>
+				<Search
+					change={this.handleChange}
+					searchQuery={this.state.searchQuery}
+					myPosts={this.state.myPosts}
+					reset={this.reset}
+					handleSubmit={this.handleSubmit}
+				/>
+				<div className='posts'>
+					{posts &&
+						posts.map(({ pid, title, username, pic }) => {
+							return (
+								<Link key={pid} to={`/post/${pid}`}>
+									<div className='postItem'>
+										<h2>{title}</h2>
+										<div>
+											<p>by {username}</p>
+											<img src={pic} alt={username} />
+										</div>
+									</div>
+								</Link>
+							)
+						})}
+				</div>
+			</div>
+		)
+	}
 }
-// function mapStateToProps(state){
-//     return {
-//         myPosts: state.myPosts,
-//         state
-//     }
-// }
 
-// const mapDispatchToProps = () => {
-//     return {
-//         setPosts,
-//         setPost
-//     }
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps())(Dashboard)
-export default Dashboard
+export default connect(state => state)(Dashboard)
+//props

@@ -9,8 +9,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Route to='/' component={Nav} />
-        {routes}
+        <Route path='/' component={Nav} />
+          {routes}
       </div>
     );
   } 

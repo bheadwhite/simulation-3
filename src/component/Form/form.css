@@ -1,8 +1,18 @@
+.Form {
+    box-shadow: 0 0 5px grey;
+    background: white;
+    justify-content: space-between;
+    padding: 20px;
+    margin: 2rem auto auto;
+    width: 100%;
+}
+
 .newImage img {
     max-height: 325px;
     max-width: 520px;
     box-shadow: 0 0 2px grey;
 }
+
 .newTitle {
     width: 100%;
     padding: 20px 40px;
@@ -11,18 +21,8 @@
 .newTitle input {
     width: 100%
 }
-.newTitle {
-    width: 100%;
-    padding: 20px 40px;
-    text-align: start;
-}
-.newTitle {
-    width: 100%;
-    padding: 20px 40px;
-    text-align: start;
-}
 textarea {
     width: 100%;
-    border: 1px solid black;
+    border: 2px inset #efeeee;
     height: 100px;
 }
