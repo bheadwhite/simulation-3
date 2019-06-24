@@ -17,11 +17,28 @@ class Post extends Component {
 		samplePic: "http://denrakaev.com/wp-content/uploads/2015/03/no-image-800x511.png",
 		author: false
 	}
-	componentDidUpdate(){
-		console.log('didUPdate')
+	// shouldComponentUpdate(){
+	// 	if(this.state.myPost.id){
+	// 		return true
+	// 	} else {
+	// 		return false
+	// 	}
+	// }
+	componentDidUpdate() {
+		if (this.state.myPost.id) {
+			if(this.props.user.id === this.state.myPost.id && !this.state.author){
+				this.setState({
+					author: true
+				})
+			} else if(this.props.user.id !== this.state.myPost.id && this.state.author){
+				this.setState({
+					author: false
+				})
+			}
+		}
 	}
 	componentDidMount() {
-		console.log('mounted')
+		console.log("mounted")
 		if (!this.props.user.username) {
 			axios.get("/api/auth/me").then(({ data }) => {
 				data
@@ -50,21 +67,38 @@ class Post extends Component {
 		console.log(this.state.myPost)
 		console.log(this.props)
 		const { content, img, pic, title, username } = this.state.myPost
+		const nonAuthorPost = (
+			<div className='header'>
+				<h1>{title}</h1>
+				<div className='picEnd'>
+					<p>by {username}</p>
+					<div>
+						<img src={pic} alt={username} />
+					</div>
+				</div>
+			</div>
+		)
+		const authoredPost = (
+			<div className='header'>
+				<h1>{title}</h1>
+				<div className='picEnd'>
+					<button>edit</button>
+					<button>delete</button>
+					<p>by {username}</p>
+					<div>
+						<img src={pic} alt={username} />
+					</div>
+				</div>
+			</div>
+		)
 		return (
 			<div className='viewContainer'>
 				<div className='Post'>
-					<div className='header'>
-						<h1>{title}</h1>
-						<div className='picEnd'>
-							<p>by {username}</p>
-							<div>
-								<img src={pic} alt={username} />
-							</div>
-						</div>
-					</div>
+					{!this.state.author && nonAuthorPost}
+					{this.state.author && authoredPost}
 					<div className='content'>
 						<div className='pic'>
-							<img src={img} alt={title} onError={this.picError}/>
+							<img src={img} alt={title} onError={this.picError} />
 						</div>
 						<div className='description'>
 							<p>{content}</p>
