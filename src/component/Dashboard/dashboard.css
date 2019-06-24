@@ -87,3 +87,7 @@ label {
 .postItem img {
     height: 50px;
 }
+
+.check input {
+    cursor: pointer;
+}

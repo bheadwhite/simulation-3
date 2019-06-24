@@ -45,6 +45,7 @@ app.post("/api/newPost/:id", controller.newPost)
 app.delete('/api/post/:id', controller.deletePost)
 app.get("/api/posts", controller.getPosts)
 app.get("/api/post/:id", controller.getPostById)
+app.put("/api/post/:id", controller.updatePostById)
 app.get("/api/auth/me", controller.auth)
 app.get("/api/logout", controller.logout)
 

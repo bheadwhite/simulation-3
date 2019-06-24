@@ -54,6 +54,10 @@ body div {
     color: white;
 }
 
+.buttons button {
+    cursor: pointer;
+}
+
 @media screen and (max-width: 1260px){
     .auth-border {
         width: 100%;

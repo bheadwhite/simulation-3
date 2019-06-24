@@ -75,7 +75,9 @@ class Form extends Component {
 							<textarea name='content' onChange={this.handleChange} value={this.state.content} />
 						</div>
 						<div>
-							<button className="postBtn" onClick={this.postNew}>Post</button>
+							<button className='postBtn' onClick={this.postNew}>
+								Post
+							</button>
 						</div>
 					</div>
 				</div>

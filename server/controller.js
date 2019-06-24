@@ -70,6 +70,10 @@ module.exports = {
 			} `
 		).then(resp => res.status(200).send(resp));
 	},
+	updatePostById: (req, res) => {
+		const db = req.app.get("db");
+		
+	},
 	newPost: (req, res, next) => {
         const db = req.app.get("db");
         const { id } = req.params

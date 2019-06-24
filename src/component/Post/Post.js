@@ -7,14 +7,21 @@ import axios from "axios"
 
 class Post extends Component {
 	state = {
-		title: "",
-		content: "",
-		username: "",
-		pic: "",
-		img: "",
-		samplePic: "http://denrakaev.com/wp-content/uploads/2015/03/no-image-800x511.png"
+		myPost: {
+			title: "",
+			content: "",
+			username: "",
+			pic: "",
+			img: ""
+		},
+		samplePic: "http://denrakaev.com/wp-content/uploads/2015/03/no-image-800x511.png",
+		author: false
+	}
+	componentDidUpdate(){
+		console.log('didUPdate')
 	}
 	componentDidMount() {
+		console.log('mounted')
 		if (!this.props.user.username) {
 			axios.get("/api/auth/me").then(({ data }) => {
 				data
@@ -30,14 +37,19 @@ class Post extends Component {
 				type: UPDATE_POSTS,
 				payload: data
 			})
+			const post = this.props.posts.filter(p => p.pid === Number(this.props.match.params.postid))
+			this.setState({
+				myPost: post[0]
+			})
 		})
 	}
 	picError = e => {
 		e.target.src = this.state.samplePic
 	}
 	render() {
-		const post = this.props.posts.filter(p => p.pid === Number(this.props.match.params.postid))
-		const { content, img, pic, title, username } = post[0] || this.state
+		console.log(this.state.myPost)
+		console.log(this.props)
+		const { content, img, pic, title, username } = this.state.myPost
 		return (
 			<div className='viewContainer'>
 				<div className='Post'>
