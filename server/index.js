@@ -4,7 +4,6 @@ const express = require("express"),
 	app = express(),
 	massive = require("massive"),
 	cors = require("cors"),
-	cookieParser = require("cookie-parser"),
 	session = require("express-session"),
 	path = require("path")
 require("dotenv").config()
