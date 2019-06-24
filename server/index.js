@@ -29,7 +29,7 @@ app.use(
 )
 
 //express.static will serve up the front end through the server
-app.use(express.static(path.join(__dirname, 'build')))
+app.use(express.static(path.join(__dirname, '../build')))
 
 app.post("/api/register", controller.register)
 app.post("/api/login", controller.login)
@@ -51,7 +51,7 @@ app.get("/api/logout", controller.logout)
 
 app.use('/*', (req, res) => {
 	res.sendFile('index.html', {
-		root: path.join(__dirname, 'build')
+		root: path.join(__dirname, '../build')
 	})
 })
 
