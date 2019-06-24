@@ -6,6 +6,15 @@
     margin: 2rem auto auto;
     width: 100%;
 }
+.Form .wrapper {
+    max-width: 800px;
+    margin: auto;
+}
+
+.Form .postBtn {
+    padding: .3rem 1rem;
+    cursor: pointer;
+}
 
 .newImage img {
     max-height: 325px;
@@ -16,13 +25,15 @@
 .newTitle {
     width: 100%;
     padding: 20px 40px;
-    text-align: start;
+    text-align: left;
 }
 .newTitle input {
-    width: 100%
+    width: 100%;
+    max-width: 800px;
 }
 textarea {
     width: 100%;
+    max-width: 800px;
     border: 2px inset #efeeee;
     height: 100px;
 }

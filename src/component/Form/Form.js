@@ -58,23 +58,25 @@ class Form extends Component {
 					<div className='header'>
 						<h1>New Post</h1>
 					</div>
-					<div className='newTitle'>
-						<h3>Title:</h3>
-						<input type='text' name='title' onChange={this.handleChange} value={this.state.title} />
-					</div>
-					<div className='newImage'>
-						<img src={imgURL} alt='new pic' onError={this.checkPicture} />
-					</div>
-					<div className='newTitle'>
-						<h3>Image URL:</h3>
-						<input type='text' name='imageURL' onChange={this.handleChange} value={this.state.imageUrl} />
-					</div>
-					<div className='newTitle'>
-						<h3>Content:</h3>
-						<textarea name='content' onChange={this.handleChange} value={this.state.content} />
-					</div>
-					<div>
-						<button onClick={this.postNew}>Post</button>
+					<div className='wrapper'>
+						<div className='newTitle'>
+							<h3>Title:</h3>
+							<input type='text' name='title' onChange={this.handleChange} value={this.state.title} />
+						</div>
+						<div className='newImage'>
+							<img src={imgURL} alt='new pic' onError={this.checkPicture} />
+						</div>
+						<div className='newTitle'>
+							<h3>Image URL:</h3>
+							<input type='text' name='imageURL' onChange={this.handleChange} value={this.state.imageUrl} />
+						</div>
+						<div className='newTitle'>
+							<h3>Content:</h3>
+							<textarea name='content' onChange={this.handleChange} value={this.state.content} />
+						</div>
+						<div>
+							<button className="postBtn" onClick={this.postNew}>Post</button>
+						</div>
 					</div>
 				</div>
 			</div>
