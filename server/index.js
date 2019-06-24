@@ -9,7 +9,7 @@ const express = require("express"),
 	path = require("path")
 require("dotenv").config()
 
-const port = process.env.SERVER_PORT || 3001
+const port = process.env.PORT || 3001
 
 massive(process.env.DATABASE_URL)
 	.then(db => app.set("db", db))
@@ -49,7 +49,7 @@ app.get("/api/post/:id", controller.getPostById)
 app.get("/api/auth/me", controller.auth)
 app.get("/api/logout", controller.logout)
 
-app.use('*', (req, res) => {
+app.use('/*', (req, res) => {
 	res.sendFile('index.html', {
 		root: path.join(__dirname, 'build')
 	})
