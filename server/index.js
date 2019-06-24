@@ -5,7 +5,8 @@ const express = require("express"),
 	massive = require("massive"),
 	cors = require("cors"),
 	cookieParser = require("cookie-parser"),
-	session = require("express-session")
+	session = require("express-session"),
+	path = require("path")
 require("dotenv").config()
 
 const port = process.env.SERVER_PORT || 3001
@@ -27,8 +28,8 @@ app.use(
 	})
 )
 
-//express.static will serve up the front end through the server.
-
+//express.static will serve up the front end through the server
+app.use(express.static(path.join(__dirname, 'build')))
 app.post("/api/register", controller.register)
 app.post("/api/login", controller.login)
 
@@ -46,6 +47,11 @@ app.get("/api/posts", controller.getPosts)
 app.get("/api/post/:id", controller.getPostById)
 app.get("/api/auth/me", controller.auth)
 app.get("/api/logout", controller.logout)
+app.use('*', (req, res) => {
+	res.sendFile('index.html', {
+		root: path.join(__dirname, 'build')
+	})
+})
 
 app.listen(port, () => {
 	console.log(`server is running on ${port}`)
