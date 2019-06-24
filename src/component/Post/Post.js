@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import { withRouter } from "react-router-dom"
-import store, { UPDATE_USER } from "../../ducks/store"
+import store, { UPDATE_USER, UPDATE_POSTS } from "../../ducks/store"
 import "./Post.css"
 import axios from "axios"
 
@@ -15,13 +15,21 @@ class Post extends Component {
 		samplePic: "http://denrakaev.com/wp-content/uploads/2015/03/no-image-800x511.png"
 	}
 	componentDidMount() {
-		axios.get("/api/auth/me").then(({ data }) => {
-			data
-				? store.dispatch({
-						type: UPDATE_USER,
-						payload: data
-				  })
-				: this.props.history.push("/")
+		if (!this.props.user.username) {
+			axios.get("/api/auth/me").then(({ data }) => {
+				data
+					? store.dispatch({
+							type: UPDATE_USER,
+							payload: data
+					  })
+					: this.props.history.push("/")
+			})
+		}
+		axios.get("/api/posts").then(({ data }) => {
+			store.dispatch({
+				type: UPDATE_POSTS,
+				payload: data
+			})
 		})
 	}
 	picError = e => {

@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
-import store, { UPDATE_USER } from "../../ducks/store"
+import store, { UPDATE_USER, UPDATE_POSTS } from "../../ducks/store"
 import { withRouter } from "react-router-dom"
 import axios from "axios"
 import "./form.css"
@@ -14,13 +14,21 @@ class Form extends Component {
 	}
 
 	componentDidMount() {
-		axios.get("/api/auth/me").then(({ data }) => {
-			data
-				? store.dispatch({
-						type: UPDATE_USER,
-						payload: data
-				  })
-				: this.props.history.push("/")
+		if (!this.props.user.username) {
+			axios.get("/api/auth/me").then(({ data }) => {
+				data
+					? store.dispatch({
+							type: UPDATE_USER,
+							payload: data
+					  })
+					: this.props.history.push("/")
+			})
+		}
+		axios.get("/api/posts").then(({ data }) => {
+			store.dispatch({
+				type: UPDATE_POSTS,
+				payload: data
+			})
 		})
 	}
 	handleChange = e => {

@@ -79,6 +79,7 @@ label {
     min-width: 140px;
     display: flex;
     align-items: flex-end;
+    text-align: right;
 }
 .postItem p {
     color: black;
