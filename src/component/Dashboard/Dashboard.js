@@ -13,9 +13,6 @@ class Dashboard extends Component {
 		searchQuery: "",
 		posts: []
 	}
-	componentDidMount() {
-		console.log("dashboard mounted")
-	}
 	componentDidUpdate(prevProps, prevState) {
 		const query = prevState.searchQuery !== this.state.searchQuery
 		const myPosts = prevState.myPosts !== this.state.myPosts

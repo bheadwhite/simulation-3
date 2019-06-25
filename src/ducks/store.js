@@ -4,16 +4,11 @@ import createHistory from 'history/createBrowserHistory'
 import promiseMiddleware from 'redux-promise-middleware'
 import { routerMiddleware } from 'react-router-redux'
 
-
-
 export const UPDATE_USER =     'UPDATE_USER'
 export const UPDATE_POSTS =    'UPDATE_POSTS'
 export const UPDATE_POST =     'UPDATE_POST'
 export const RESET =           'RESET'
 export const _FULFILLED =      '_FULFILLED'
-
-// ,_PENDING =                 '_PENDING'
-// _REJECTED =                 '_REJECTED';
 
 const history = createHistory()
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

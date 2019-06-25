@@ -38,7 +38,6 @@ class Post extends Component {
 		e.target.src = this.state.samplePic
 	}
 	render() {
-		console.log("post is rendering")
 		const { content, img, pic, title, username } = this.state.myPost
 		const nonAuthorPost = (
 			<div className='header'>
@@ -82,4 +81,5 @@ class Post extends Component {
 		)
 	}
 }
+
 export default connect(state => state)(withRouter(Post))

@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import { withRouter } from "react-router-dom"
-import store, { UPDATE_POSTS } from '../../ducks/store'
+import store, { UPDATE_POSTS } from "../../ducks/store"
 import axios from "axios"
 import "./form.css"
 
@@ -13,14 +13,6 @@ class Form extends Component {
 		title: ""
 	}
 
-	componentDidMount() {
-		// axios.get("/api/posts").then(({ data }) => {
-		// 	store.dispatch({
-		// 		type: UPDATE_POSTS,
-		// 		payload: data
-		// 	})
-		// })
-	}
 	handleChange = e => {
 		this.setState({
 			[e.target.name]: e.target.value
@@ -39,12 +31,13 @@ class Form extends Component {
 			img: imageURL
 		}
 		axios.post(`/api/newPost/${this.props.user.id}`, img).then(res => {
-			store.dispatch({
-						type: UPDATE_POSTS,
-						payload: res.data
-					},
-					this.props.history.push("/dashboard")
-					)
+			store.dispatch(
+				{
+					type: UPDATE_POSTS,
+					payload: res.data
+				},
+				this.props.history.push("/dashboard")
+			)
 		})
 	}
 	render() {
