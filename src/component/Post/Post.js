@@ -1,9 +1,7 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import { withRouter } from "react-router-dom"
-import store, { UPDATE_USER, UPDATE_POSTS } from "../../ducks/store"
 import "./Post.css"
-import axios from "axios"
 
 class Post extends Component {
 	state = {
@@ -17,20 +15,13 @@ class Post extends Component {
 		samplePic: "http://denrakaev.com/wp-content/uploads/2015/03/no-image-800x511.png",
 		author: false
 	}
-	// shouldComponentUpdate(){
-	// 	if(this.state.myPost.id){
-	// 		return true
-	// 	} else {
-	// 		return false
-	// 	}
-	// }
 	componentDidUpdate() {
 		if (this.state.myPost.id) {
-			if(this.props.user.id === this.state.myPost.id && !this.state.author){
+			if (this.props.user.id === this.state.myPost.id && !this.state.author) {
 				this.setState({
 					author: true
 				})
-			} else if(this.props.user.id !== this.state.myPost.id && this.state.author){
+			} else if (this.props.user.id !== this.state.myPost.id && this.state.author) {
 				this.setState({
 					author: false
 				})
@@ -38,34 +29,16 @@ class Post extends Component {
 		}
 	}
 	componentDidMount() {
-		console.log("mounted")
-		if (!this.props.user.username) {
-			axios.get("/api/auth/me").then(({ data }) => {
-				data
-					? store.dispatch({
-							type: UPDATE_USER,
-							payload: data
-					  })
-					: this.props.history.push("/")
-			})
-		}
-		axios.get("/api/posts").then(({ data }) => {
-			store.dispatch({
-				type: UPDATE_POSTS,
-				payload: data
-			})
-			const post = this.props.posts.filter(p => p.pid === Number(this.props.match.params.postid))
-			this.setState({
-				myPost: post[0]
-			})
+		const post = this.props.posts.filter(p => p.pid === Number(this.props.match.params.postid))
+		this.setState({
+			myPost: post[0]
 		})
 	}
 	picError = e => {
 		e.target.src = this.state.samplePic
 	}
 	render() {
-		console.log(this.state.myPost)
-		console.log(this.props)
+		console.log("post is rendering")
 		const { content, img, pic, title, username } = this.state.myPost
 		const nonAuthorPost = (
 			<div className='header'>

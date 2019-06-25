@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
-import store, { UPDATE_USER, UPDATE_POSTS } from "../../ducks/store"
 import { withRouter } from "react-router-dom"
+import store, { UPDATE_POSTS } from '../../ducks/store'
 import axios from "axios"
 import "./form.css"
 
@@ -14,22 +14,12 @@ class Form extends Component {
 	}
 
 	componentDidMount() {
-		if (!this.props.user.username) {
-			axios.get("/api/auth/me").then(({ data }) => {
-				data
-					? store.dispatch({
-							type: UPDATE_USER,
-							payload: data
-					  })
-					: this.props.history.push("/")
-			})
-		}
-		axios.get("/api/posts").then(({ data }) => {
-			store.dispatch({
-				type: UPDATE_POSTS,
-				payload: data
-			})
-		})
+		// axios.get("/api/posts").then(({ data }) => {
+		// 	store.dispatch({
+		// 		type: UPDATE_POSTS,
+		// 		payload: data
+		// 	})
+		// })
 	}
 	handleChange = e => {
 		this.setState({
@@ -48,10 +38,19 @@ class Form extends Component {
 			content,
 			img: imageURL
 		}
-		axios.post(`/api/newPost/${this.props.user.id}`, img).then(res => this.props.history.push("/dashboard"))
+		axios.post(`/api/newPost/${this.props.user.id}`, img).then(res => {
+			store.dispatch({
+						type: UPDATE_POSTS,
+						payload: res.data
+					},
+					this.props.history.push("/dashboard")
+					)
+		})
 	}
 	render() {
-		const imgURL = this.state.imageURL ? this.state.imageURL : this.state.samplePic
+		console.log("form is rendering")
+		const { imageURL, samplePic, content, title } = this.state
+		const imgURL = imageURL ? imageURL : samplePic
 		return (
 			<div className='viewContainer'>
 				<div className='Form'>
@@ -61,18 +60,18 @@ class Form extends Component {
 					<div className='wrapper'>
 						<div className='newTitle'>
 							<h3>Title:</h3>
-							<input type='text' name='title' onChange={this.handleChange} value={this.state.title} />
+							<input type='text' name='title' onChange={this.handleChange} value={title} />
 						</div>
 						<div className='newImage'>
 							<img src={imgURL} alt='new pic' onError={this.checkPicture} />
 						</div>
 						<div className='newTitle'>
 							<h3>Image URL:</h3>
-							<input type='text' name='imageURL' onChange={this.handleChange} value={this.state.imageUrl} />
+							<input type='text' name='imageURL' onChange={this.handleChange} value={imageURL} />
 						</div>
 						<div className='newTitle'>
 							<h3>Content:</h3>
-							<textarea name='content' onChange={this.handleChange} value={this.state.content} />
+							<textarea name='content' onChange={this.handleChange} value={content} />
 						</div>
 						<div>
 							<button className='postBtn' onClick={this.postNew}>

@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
 import { connect } from "react-redux"
-import store, { UPDATE_POSTS, UPDATE_USER } from "./../../ducks/store"
+// import store, { UPDATE_POSTS } from "./../../ducks/store"
 import Search from "../Search/Search"
 import axios from "axios"
 
@@ -14,22 +14,7 @@ class Dashboard extends Component {
 		posts: []
 	}
 	componentDidMount() {
-		if (!this.props.user.username) {
-			axios.get("/api/auth/me").then(({ data }) => {
-				data
-				? store.dispatch({
-					type: UPDATE_USER,
-							payload: data
-					  })
-					: this.props.history.push("/")
-			})
-		}
-		axios.get("/api/posts").then(({ data }) => {
-			store.dispatch({
-				type: UPDATE_POSTS,
-				payload: data
-			})
-		})
+		console.log("dashboard mounted")
 	}
 	componentDidUpdate(prevProps, prevState) {
 		const query = prevState.searchQuery !== this.state.searchQuery
@@ -40,7 +25,11 @@ class Dashboard extends Component {
 	}
 
 	updatePosts = () => {
-		let posts = this.props.posts.filter(post => post.title.toLowerCase().includes(this.state.searchQuery.toLowerCase()))
+		console.log("updating posts on dashboard")
+		let posts
+		if (this.props.posts.length > 0) {
+			posts = this.props.posts.filter(post => post.title.toLowerCase().includes(this.state.searchQuery.toLowerCase()))
+		}
 		if (this.state.myPosts) {
 			posts = posts.filter(post => post.id === this.props.user.id)
 		}
@@ -96,7 +85,7 @@ class Dashboard extends Component {
 								<Link key={pid} to={`/post/${pid}`}>
 									<div className='postItem'>
 										<h2>{title}</h2>
-										<div className="postId">
+										<div className='postId'>
 											<p>by {username}</p>
 											<img src={pic} alt={username} />
 										</div>
