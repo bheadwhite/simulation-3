@@ -9,7 +9,7 @@ module.exports = {
 			.findOne({ username })
 			.then(user => {
 				if (user) {
-					throw "Sorry this username already exists. Please login."
+					throw "This username already exists. Please login."
 				} else {
 					return bcrypt.hash(password, saltRounds).then(hash => {
 						const newUser = {
@@ -20,7 +20,7 @@ module.exports = {
 						db.helo_users.insert(newUser).then(user => {
 							delete user.password
 							req.session.user = user
-							res.status(201).send(user)
+							res.status(201).send("Thanks for registering! Please Login.")
 						})
 					})
 				}
@@ -101,7 +101,8 @@ module.exports = {
 			})
 			.then(resp => {
 				res.send(resp)
-			}).catch(err => res.send(err))
+			})
+			.catch(err => res.send(err))
 	},
 	auth: (req, res, next) => {
 		if (req.session.user) {

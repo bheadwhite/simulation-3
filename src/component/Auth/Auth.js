@@ -9,7 +9,8 @@ const heloImg =
 class Auth extends Component {
 	state = {
 		username: "",
-		password: ""
+		password: "",
+		msg: ""
 	}
 
 	inputHandler = e => {
@@ -20,35 +21,42 @@ class Auth extends Component {
 
 	login = () => {
 		const { username, password } = this.state
-		axios.post("/api/login", { username, password }).then(res => {
-			store.dispatch({
-				type: UPDATE_USER,
-				payload: res.data
-			})
-			axios.get("/api/posts").then(({ data }) => {
-				console.log("setting posts to redux from app")
-				store.dispatch(
-					{
-						type: UPDATE_POSTS,
-						payload: data
-					},
-					this.props.history.push("/dashboard")
-				)
-			})
+		axios.post("/api/login", { username, password }).then(({data}) => {
+			if(data.id){
+				store.dispatch({
+					type: UPDATE_USER,
+					payload: data
+				})
+				axios.get("/api/posts").then(({data}) => {
+					console.log("setting posts to redux from app")
+					store.dispatch(
+						{
+							type: UPDATE_POSTS,
+							payload: data
+						},
+						this.props.history.push("/dashboard")
+						)
+					})
+				} else {
+					this.setState({
+						msg: data
+					})
+				}
 		})
 	}
 
 	register = () => {
 		const { username, password } = this.state
 		axios.post("/api/register", { username, password }).then(({ data }) => {
-			if (data.id) {
-				console.log("thanks for registering")
-			} else {
-				console.log(data)
+			if(data){
+				this.setState({
+					msg: data
+				})
 			}
 		})
 	}
 	render() {
+		console.log(this.state)
 		const { username, password } = this.state
 		return (
 			<div className='background'>
@@ -60,7 +68,7 @@ class Auth extends Component {
 							Username:
 							<input type='text' name='username' value={username} onChange={this.inputHandler} />
 							<br />
-							<div className='error'>{}</div>
+							<div className='message'>{this.state.msg}</div>
 							Password:
 							<input type='password' name='password' value={password} onChange={this.inputHandler} />
 							<br />
