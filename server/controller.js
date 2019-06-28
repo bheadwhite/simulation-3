@@ -32,22 +32,25 @@ module.exports = {
 	login: (req, res, next) => {
 		const db = req.app.get("db")
 		const { username, password } = req.body
-
+		let currentUser
 		db.helo_users
 			.findOne({ username })
 			.then(user => {
 				if (!user) {
 					throw "No user found with that name. Please Register"
 				} else {
+					currentUser = user
 					//check password
-					bcrypt.compare(password, user.password).then(correctPassword => {
-						if (correctPassword) {
-							delete password
-							delete user.password
-							req.session.user = user
-							res.send(user)
-						}
-					})
+					return bcrypt.compare(password, user.password)
+				}
+			})
+			.then(correctPassword => {
+				if (correctPassword) {
+					delete currentUser.password
+					req.session.user = currentUser
+					res.send(currentUser)
+				} else {
+					throw `Sorry the credentials provided don't match.`
 				}
 			})
 			.catch(err => {

@@ -15,7 +15,8 @@ class Auth extends Component {
 
 	inputHandler = e => {
 		this.setState({
-			[e.target.name]: e.target.value
+			[e.target.name]: e.target.value,
+			msg: ""
 		})
 	}
 
@@ -28,7 +29,6 @@ class Auth extends Component {
 					payload: data
 				})
 				axios.get("/api/posts").then(({data}) => {
-					console.log("setting posts to redux from app")
 					store.dispatch(
 						{
 							type: UPDATE_POSTS,
@@ -56,7 +56,6 @@ class Auth extends Component {
 		})
 	}
 	render() {
-		console.log(this.state)
 		const { username, password } = this.state
 		return (
 			<div className='background'>
