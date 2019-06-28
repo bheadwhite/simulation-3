@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 import { withRouter } from "react-router-dom"
 import "./Post.css"
+import axios from "axios";
 
 class Post extends Component {
 	state = {
@@ -34,6 +35,12 @@ class Post extends Component {
 			myPost: post[0]
 		})
 	}
+	delete = () => {
+		const myPost = this.state.myPost
+		axios.delete('/api/post', myPost).then(res=> {
+			console.log(res)
+		})
+	}
 	picError = e => {
 		e.target.src = this.state.samplePic
 	}
@@ -54,8 +61,7 @@ class Post extends Component {
 			<div className='header'>
 				<h1>{title}</h1>
 				<div className='picEnd'>
-					<button>edit</button>
-					<button>delete</button>
+					<button id="delete" onClick={this.delete.bind(this)}>delete</button>
 					<p>by {username}</p>
 					<div>
 						<img src={pic} alt={username} />

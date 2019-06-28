@@ -85,8 +85,7 @@ module.exports = {
 				user_id: Number(id)
 			})
 			.then(() => {
-				db.getAllPosts()
-				.then(resp => {
+				db.getAllPosts().then(resp => {
 					res.send(resp)
 				})
 			})
@@ -95,6 +94,7 @@ module.exports = {
 	deletePost: (req, res) => {
 		const db = req.app.get("db")
 		const { id } = req.params
+		// db.destroy
 	},
 	auth: (req, res, next) => {
 		if (req.session.user) {

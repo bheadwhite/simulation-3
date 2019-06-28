@@ -67,29 +67,33 @@ class Dashboard extends Component {
 		const { searchQuery, myPosts } = this.state
 		const posts = searchQuery || myPosts ? this.state.posts : null || this.props.posts
 		return (
-			<div className='viewContainer'>
-				<Search
-					change={this.handleChange}
-					searchQuery={this.state.searchQuery}
-					myPosts={this.state.myPosts}
-					reset={this.reset}
-					handleSubmit={this.handleSubmit}
-				/>
-				<div className='posts'>
-					{posts &&
-						posts.map(({ pid, title, username, pic }) => {
-							return (
-								<Link key={pid} to={`/post/${pid}`}>
-									<div className='postItem'>
-										<h2>{title}</h2>
-										<div className='postId'>
-											<p>by {username}</p>
-											<img src={pic} alt={username} />
+			<div className='Dashboard'>
+				<div className='searchContainer'>
+					<Search
+						change={this.handleChange}
+						searchQuery={this.state.searchQuery}
+						myPosts={this.state.myPosts}
+						reset={this.reset}
+						handleSubmit={this.handleSubmit}
+					/>
+				</div>
+				<div className='container'>
+					<div className='posts'>
+						{posts &&
+							posts.map(({ pid, title, username, pic }) => {
+								return (
+									<Link key={pid} to={`/post/${pid}`}>
+										<div className='postItem'>
+											<h2>{title}</h2>
+											<div className='postId'>
+												<p>by {username}</p>
+												<img src={pic} alt={username} />
+											</div>
 										</div>
-									</div>
-								</Link>
-							)
-						})}
+									</Link>
+								)
+							})}
+					</div>
 				</div>
 			</div>
 		)

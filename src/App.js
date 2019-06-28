@@ -9,22 +9,18 @@ import { connect } from "react-redux"
 
 class App extends Component {
 	componentDidMount() {
-		console.log("app mounted")
 		axios.get("/api/auth/me").then(res => {
 			//handle processing data or route to home
 			if (res.data) {
 				//handle user/posts data retreival
 				if (!this.props.posts.length > 0) {
-				  console.log('getting posts')
 					axios.get("/api/posts").then(({ data }) => {
-				    console.log('setting posts to redux from app')
 						store.dispatch({
 							type: UPDATE_POSTS,
 							payload: data
 						})
 					})
 				}
-				console.log("setting user to redux from app")
 				store.dispatch({
 					type: UPDATE_USER,
 					payload: res.data
@@ -37,8 +33,8 @@ class App extends Component {
 	render() {
 		return (
 			<div className='App'>
-				<Route path='/' component={Nav} />
-				{routes}
+					<Route path='/' component={Nav} />
+					{routes}
 			</div>
 		)
 	}
