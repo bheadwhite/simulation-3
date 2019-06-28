@@ -1,8 +1,9 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import { withRouter } from "react-router-dom"
+import store, {UPDATE_POSTS} from '../../ducks/store'
 import "./Post.css"
-import axios from "axios";
+import axios from "axios"
 
 class Post extends Component {
 	state = {
@@ -31,20 +32,30 @@ class Post extends Component {
 	}
 	componentDidMount() {
 		const post = this.props.posts.filter(p => p.pid === Number(this.props.match.params.postid))
-		this.setState({
-			myPost: post[0]
-		})
+		if(post[0]){
+			this.setState({
+				myPost: post[0]
+			})
+		}
 	}
-	delete = () => {
+	delete = id => {
 		const myPost = this.state.myPost
-		axios.delete('/api/post', myPost).then(res=> {
-			console.log(res)
+		axios.delete(`/api/post/${myPost.pid}`).then(res => {
+			if(Array(res.data)){
+				store.dispatch({
+					type: UPDATE_POSTS,
+					payload: res.data
+				},
+				this.props.history.push('/dashboard')
+				)
+			}
 		})
 	}
 	picError = e => {
 		e.target.src = this.state.samplePic
 	}
 	render() {
+		console.log(this.state)
 		const { content, img, pic, title, username } = this.state.myPost
 		const nonAuthorPost = (
 			<div className='header'>
@@ -61,7 +72,9 @@ class Post extends Component {
 			<div className='header'>
 				<h1>{title}</h1>
 				<div className='picEnd'>
-					<button id="delete" onClick={this.delete.bind(this)}>delete</button>
+					<button id='delete' onClick={this.delete.bind(this)}>
+						delete
+					</button>
 					<p>by {username}</p>
 					<div>
 						<img src={pic} alt={username} />

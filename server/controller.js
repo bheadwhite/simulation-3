@@ -94,7 +94,14 @@ module.exports = {
 	deletePost: (req, res) => {
 		const db = req.app.get("db")
 		const { id } = req.params
-		// db.destroy
+		db.helo_posts
+			.destroy({ id: Number(id) })
+			.then(() => {
+				return db.getAllPosts()
+			})
+			.then(resp => {
+				res.send(resp)
+			}).catch(err => res.send(err))
 	},
 	auth: (req, res, next) => {
 		if (req.session.user) {

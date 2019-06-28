@@ -21,14 +21,14 @@ app.use(
 		secret: process.env.SESSION_SECRET,
 		resave: false,
 		saveUninitialized: true,
-		cookie: {
+			cookie: {
 			maxAge: 60000
 		}
 	})
 )
 
 //express.static will serve up the front end through the server
-// app.use(express.static(path.join(__dirname, '../build')))
+app.use(express.static(path.join(__dirname, '../build')))
 
 app.post("/api/register", controller.register)
 app.post("/api/login", controller.login)
@@ -42,18 +42,18 @@ app.use((req, res, next) => {
 })
 
 app.post("/api/newPost/:id", controller.newPost)
-app.delete('/api/post', controller.deletePost)
+app.delete("/api/post/:id", controller.deletePost)
 app.get("/api/posts", controller.getPosts)
 app.get("/api/post/:id", controller.getPostById)
 app.put("/api/post/:id", controller.updatePostById)
 app.get("/api/auth/me", controller.auth)
 app.get("/api/logout", controller.logout)
 
-// app.use('/*', (req, res) => {
-// 	res.sendFile('index.html', {
-// 		root: path.join(__dirname, '../build')
-// 	})
-// })
+app.use('/*', (req, res) => {
+	res.sendFile('index.html', {
+		root: path.join(__dirname, '../build')
+	})
+})
 
 app.listen(port, () => {
 	console.log(`server is running on ${port}`)
