@@ -15,6 +15,7 @@
 }
 .Post .picEnd img {
   height: 100px;
+  min-width: 100px;
 }
 .Post .picEnd p {
   margin-top: auto;

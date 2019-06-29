@@ -11,7 +11,9 @@ require("dotenv").config()
 const port = process.env.PORT || 3001
 
 massive(process.env.DATABASE_URL)
-	.then(db => app.set("db", db))
+	.then(db => {
+		app.set("db", db)
+	})
 	.catch(err => console.log(err))
 
 app.use(

@@ -13,6 +13,9 @@ class Auth extends Component {
 		msg: ""
 	}
 
+	componentDidMount(){
+		console.log('Auth Mounted')
+	}
 	inputHandler = e => {
 		this.setState({
 			[e.target.name]: e.target.value,
@@ -22,33 +25,33 @@ class Auth extends Component {
 
 	login = () => {
 		const { username, password } = this.state
-		axios.post("/api/login", { username, password }).then(({data}) => {
-			if(data.id){
+		axios.post("/api/login", { username, password }).then(({ data }) => {
+			if (data.id) {
 				store.dispatch({
 					type: UPDATE_USER,
 					payload: data
 				})
-				axios.get("/api/posts").then(({data}) => {
+				axios.get("/api/posts").then(({ data }) => {
 					store.dispatch(
 						{
 							type: UPDATE_POSTS,
 							payload: data
 						},
 						this.props.history.push("/dashboard")
-						)
-					})
-				} else {
-					this.setState({
-						msg: data
-					})
-				}
+					)
+				})
+			} else {
+				this.setState({
+					msg: data
+				})
+			}
 		})
 	}
 
 	register = () => {
 		const { username, password } = this.state
 		axios.post("/api/register", { username, password }).then(({ data }) => {
-			if(data){
+			if (data) {
 				this.setState({
 					msg: data
 				})

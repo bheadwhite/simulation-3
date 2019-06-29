@@ -31,6 +31,7 @@ class Post extends Component {
 		}
 	}
 	componentDidMount() {
+		console.log('Post Mounted')
 		const post = this.props.posts.filter(p => p.pid === Number(this.props.match.params.postid))
 		if(post[0]){
 			this.setState({

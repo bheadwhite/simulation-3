@@ -12,7 +12,9 @@ class Form extends Component {
 		content: "",
 		title: ""
 	}
-
+	componentDidMount(){
+		console.log('Form Mounted')
+	}
 	handleChange = e => {
 		this.setState({
 			[e.target.name]: e.target.value
