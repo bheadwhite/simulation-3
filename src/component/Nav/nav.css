@@ -1,46 +1,76 @@
+.nav {
+	display: flex;
+	height: 88px;
+	justify-content: space-between;
+	align-content: center;
+	box-shadow: 0 1px 7px grey;
+	background-image: linear-gradient(to bottom, #ff9770, #ff70a6);
+	position: sticky;
+}
 .profile-pic {
-    width: 85px;
-    height: 100px;
+	width: 85px;
+	height: 100px;
 }
-.nav-sidebar .pic {
-    height: 66px;
-    width: 68px;
-    margin: 20px auto 0 auto;
-    background: white;
-    border-radius: 50px;
+.nav .pic {
+	height: 66px;
+	width: 68px;
+	margin: 20px auto 0 auto;
+	background: white;
+	border-radius: 50px;
 }
-.nav-sidebar p {
-    margin: 5px;
-    color: white;
-    
+
+.nav p {
+	margin: 5px;
+	color: white;
 }
-.nav-sidebar img {
-    max-width: 100%;
-    min-height:100%;
-    max-height: 100%;
-    border-radius: 100%;
-    object-fit: fill;
-    box-shadow: 1px 1px 10px rgb(40, 38, 38);
+.nav img {
+	max-width: 100%;
+	min-height: 100%;
+	max-height: 100%;
+	border-radius: 100%;
+	object-fit: fill;
+	box-shadow: 1px 1px 10px rgb(40, 38, 38);
 }
-.nav-sidebar {
-    display: flex;
-    flex-flow: column;
-    justify-content: space-between;
-    align-content: center;
-    width: 88px;
-    height: 100vh;
-    box-shadow: 0 1px 7px grey;
-    background-image: linear-gradient(
-        to bottom,
-        #ff9770,
-        #ff70a6
-    );
-    position: sticky;
+
+.nav button {
+	margin: 15px 0;
 }
-.nav-sidebar button {
-    margin: 15px 0;
+.nav i {
+	color: white;
+	cursor: pointer;
 }
-.nav-sidebar i {
-    color: white;
-    cursor: pointer;
+@media (max-width: 699px) {
+    .nav .navUser {
+        display: none;
+    }
+    .profile-pic {
+        margin-left: 8px;
+    }
+    .nav .links {
+        margin-left: auto;
+        width: 200px;
+    }
+    .nav i {
+        margin-left: 1rem;
+    }
+    #powerBtn {
+        margin: 0;
+        margin-right: 7px;
+    }
+}
+@media (min-width: 700px) {
+	.nav {
+		width: 88px;
+		height: 100vh;
+		flex-flow: column;
+	}
+	.nav .links {
+		margin-top: 3rem;
+	}
+	#editBtn {
+		margin-left: 14px;
+	}
+	.nav .power {
+		margin-top: auto;
+	}
 }

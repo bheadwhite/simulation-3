@@ -58,9 +58,10 @@ body div {
     cursor: pointer;
 }
 
-
-@media screen and (max-width: 1260px){
+@media (max-width: 700px){
     .auth-border {
-        width: 100%;
+        padding: 40px;
+        height: 100vh;
+        width: 100vw;
     }
 }

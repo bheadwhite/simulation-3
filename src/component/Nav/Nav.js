@@ -1,5 +1,4 @@
 import React, { Component } from "react"
-import { Link } from "react-router-dom"
 import { Icon } from "semantic-ui-react"
 import { connect } from "react-redux"
 
@@ -13,31 +12,24 @@ class Nav extends Component {
 
 	render() {
 		const { user } = this.props
-		const styles = {
-			icon: { margin: "15px 5px 30px 5px" },
-			edit: { paddingLeft: "8px" },
-			power: { margin: "0px auto 39px" }
-		}
 		if (this.props.location.pathname === "/") {
 			return null
 		}
 		return (
-			<div className='nav-sidebar'>
-				<div className='nav-sidebar2'>
-					<div className='profile-pic'>
-						<div className='pic'>
-							<img src={user.pic} alt='profile pic' />
-						</div>
-						<p>{user.username}</p>
+			<div className='nav'>
+				<div className='profile-pic'>
+					<div className='pic'>
+						<img src={user.pic} alt='profile pic' />
 					</div>
-					<Link to='/dashboard'>
-						<Icon name='home' size='huge' inverted style={styles.icon} />
-					</Link>
-					<Link to='/new'>
-						<Icon name='edit outline' size='huge' style={styles.edit} />
-					</Link>
+					<p className="navUser">{user.username}</p>
 				</div>
-				<Icon name='power' size='huge' onClick={this.logout} style={styles.power} />
+				<div className='links'>
+					<Icon id='homeBtn' name='home' size='huge' inverted onClick={() => this.props.history.push("/dashboard")} />
+					<Icon id='editBtn' name='edit outline' size='huge' onClick={() => this.props.history.push("/new")} />
+				</div>
+				<div className='power'>
+					<Icon id='powerBtn' name='power' size='huge' onClick={this.logout} />
+				</div>
 			</div>
 		)
 	}

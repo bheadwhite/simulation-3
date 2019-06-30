@@ -2,7 +2,7 @@ import React from "react"
 
 const search = props => {
 	return (
-		<div className='dashSearch'>
+		<div className='searchContainer'>
 			<div className='searchbar'>
 				<input type='text' name='searchQuery' placeholder='Search by Title' onChange={props.change} value={props.searchQuery} />
 			</div>

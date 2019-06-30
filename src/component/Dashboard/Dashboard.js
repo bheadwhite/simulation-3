@@ -13,8 +13,8 @@ class Dashboard extends Component {
 		searchQuery: "",
 		posts: []
 	}
-	componentDidMount(){
-		console.log('Dashboard Mounted')
+	componentDidMount() {
+		console.log("Dashboard Mounted")
 	}
 	componentDidUpdate(prevProps, prevState) {
 		const query = prevState.searchQuery !== this.state.searchQuery
@@ -71,15 +71,13 @@ class Dashboard extends Component {
 		const posts = searchQuery || myPosts ? this.state.posts : null || this.props.posts
 		return (
 			<div className='Dashboard'>
-				<div className='searchContainer'>
-					<Search
-						change={this.handleChange}
-						searchQuery={this.state.searchQuery}
-						myPosts={this.state.myPosts}
-						reset={this.reset}
-						handleSubmit={this.handleSubmit}
-					/>
-				</div>
+				<Search
+					change={this.handleChange}
+					searchQuery={this.state.searchQuery}
+					myPosts={this.state.myPosts}
+					reset={this.reset}
+					handleSubmit={this.handleSubmit}
+				/>
 				<div className='container'>
 					<div className='posts'>
 						{posts &&
