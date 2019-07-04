@@ -16,6 +16,14 @@ class Post extends Component {
 		},
 		samplePic: "http://denrakaev.com/wp-content/uploads/2015/03/no-image-800x511.png",
 		author: false
+	}	
+	componentDidMount() {
+		const post = this.props.posts.filter(p => p.pid === Number(this.props.match.params.postid))
+		if(post[0]){
+			this.setState({
+				myPost: post[0]
+			})
+		}
 	}
 	componentDidUpdate() {
 		if (this.state.myPost.id) {
@@ -30,15 +38,7 @@ class Post extends Component {
 			}
 		}
 	}
-	componentDidMount() {
-		console.log('Post Mounted')
-		const post = this.props.posts.filter(p => p.pid === Number(this.props.match.params.postid))
-		if(post[0]){
-			this.setState({
-				myPost: post[0]
-			})
-		}
-	}
+
 	delete = id => {
 		const myPost = this.state.myPost
 		axios.delete(`/api/post/${myPost.pid}`).then(res => {
@@ -56,7 +56,6 @@ class Post extends Component {
 		e.target.src = this.state.samplePic
 	}
 	render() {
-		console.log(this.state)
 		const { content, img, pic, title, username } = this.state.myPost
 		const nonAuthorPost = (
 			<div className='header'>

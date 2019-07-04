@@ -1,7 +1,6 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
 import { connect } from "react-redux"
-// import store, { UPDATE_POSTS } from "./../../ducks/store"
 import Search from "../Search/Search"
 import axios from "axios"
 
@@ -14,9 +13,6 @@ class Dashboard extends Component {
 		posts: [],
 		hiddenSearch: false
 	}
-	componentDidMount() {
-		console.log("Dashboard Mounted")
-	}
 	componentDidUpdate(prevProps, prevState) {
 		const query = prevState.searchQuery !== this.state.searchQuery
 		const myPosts = prevState.myPosts !== this.state.myPosts
@@ -26,7 +22,6 @@ class Dashboard extends Component {
 	}
 
 	updatePosts = () => {
-		console.log("updating posts on dashboard")
 		let posts
 		if (this.props.posts.length > 0) {
 			posts = this.props.posts.filter(post => post.title.toLowerCase().includes(this.state.searchQuery.toLowerCase()))
@@ -68,7 +63,6 @@ class Dashboard extends Component {
 		}
 	}
 	hideSearch = () => {
-		console.log('clicked')
 		this.setState({
 			hiddenSearch: !this.state.hiddenSearch
 		})
@@ -112,4 +106,3 @@ class Dashboard extends Component {
 }
 
 export default connect(state => state)(Dashboard)
-//props

@@ -2,13 +2,18 @@
   box-shadow: 0 0 5px grey;
   background: white;
   justify-content: space-between;
-  padding: 2rem 5rem;
   width: 100%;
   min-height: 100%;
 }
 .Post .header {
+  margin: 0 1rem;
   display: flex;
   justify-content: space-between
+}
+.Post .header h1 {
+  font-size: 3rem;
+  color: orange;
+  margin-top: auto;
 }
 .Post .picEnd {
   display: flex;
@@ -20,13 +25,8 @@
 .Post .picEnd p {
   margin-top: auto;
 }
-.Post .header h1 {
-  font-size: 4rem;
-  color: orange;
-  margin-top: auto;
-}
+
 .content {
-  display: flex;
   margin: 2rem;
 }
 .content .pic {
@@ -34,7 +34,6 @@
   height: 100%;
   vertical-align: middle;
   min-width: 50%;
-  max-width: 60%;
   text-align: center;
 }
 
@@ -56,5 +55,19 @@
 #delete {
   background: red;
   color: white;
+}
+@media (max-width: 699px){
+
+}
+@media (min-width: 700px){
+  .content .pic {
+    max-width: 60%;
+  }
+  .content {
+    display: flex;
+  }
+  .Post .header h1 {
+    font-size: 4rem;
+  }
 }
 

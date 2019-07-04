@@ -4,7 +4,8 @@ const saltRounds = 10
 module.exports = {
 	register: (req, res, next) => {
 		const db = req.app.get("db")
-		const { username, password } = req.body
+		let { username, password } = req.body
+		username = username.toLowerCase()
 		db.helo_users
 			.findOne({ username })
 			.then(user => {
@@ -31,7 +32,8 @@ module.exports = {
 	},
 	login: (req, res, next) => {
 		const db = req.app.get("db")
-		const { username, password } = req.body
+		let { username, password } = req.body
+		username = username.toLowerCase()
 		let currentUser
 		db.helo_users
 			.findOne({ username })

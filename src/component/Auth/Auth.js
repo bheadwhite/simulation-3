@@ -12,10 +12,7 @@ class Auth extends Component {
 		password: "",
 		msg: ""
 	}
-
-	componentDidMount(){
-		console.log('Auth Mounted')
-	}
+	
 	inputHandler = e => {
 		this.setState({
 			[e.target.name]: e.target.value,

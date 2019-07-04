@@ -12,9 +12,6 @@ class Form extends Component {
 		content: "",
 		title: ""
 	}
-	componentDidMount(){
-		console.log('Form Mounted')
-	}
 	handleChange = e => {
 		this.setState({
 			[e.target.name]: e.target.value
@@ -43,7 +40,6 @@ class Form extends Component {
 		})
 	}
 	render() {
-		console.log("form is rendering")
 		const { imageURL, samplePic, content, title } = this.state
 		const imgURL = imageURL ? imageURL : samplePic
 		return (
