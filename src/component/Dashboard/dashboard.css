@@ -2,7 +2,6 @@
 	overflow-y: scroll;
 	height: 87vh;
 	width: 100%;
-	margin-top: 1rem;
 	padding-right: 17px;
 	box-sizing: content-box;
 }
@@ -18,41 +17,13 @@
 	margin: auto;
 	margin-top: 3px;
 }
-.searchContainer {
-	box-sizing: content-box;
-	padding-right: 9px;
-	display: flex;
-	box-shadow: 3px 4px 5px lightgrey;
-	text-align: left;
-	background: white;
-	justify-content: space-between;
-	padding: 20px;
-	max-width: 1000px;
-	margin: auto;
-	margin-bottom: 2px;
-}
 
 .postItem .postId {
 	display: flex;
 	justify-content: flex-end;
 	margin-right: 2rem;
 }
-.searchbar input {
-	width: 155px;
-	margin-right: 0;
-	height: 28px;
-	border: 0.3px solid lightgrey;
-	padding-left: 1rem;
-}
-.check label {
-    margin-right: 4px;
-}
-.check {
-	display: flex;
-}
-.checkbox {
-	margin: auto 15px auto 0px;
-}
+
 
 .postItem {
 	border: 1px solid lightgrey;
@@ -90,10 +61,5 @@
 		height: 100%;
 		padding-top: 1rem;
 	}
-	.searchbar input {
-		width: 400px;
-	}
-	.checkbox {
-		margin: auto 30px auto 0px;
-	}
+
 }

@@ -1,0 +1,50 @@
+.searchContainer {
+	box-sizing: content-box;
+	padding-right: 9px;
+	display: flex;
+	box-shadow: 3px 4px 5px lightgrey;
+	text-align: left;
+	background: white;
+	justify-content: space-between;
+	padding: 20px;
+	max-width: 1000px;
+	margin: auto;
+	margin-bottom: 2px;
+}
+.searchDrawer {
+  width: 100%;
+  height: 5px;
+  background: #75dbff;
+  cursor: pointer;
+}
+.searchbar input {
+	width: 155px;
+	margin-right: 0;
+	height: 28px;
+	border: 0.3px solid lightgrey;
+	padding-left: 1rem;
+}
+.check label {
+    margin-right: 4px;
+}
+.check {
+	display: flex;
+}
+.checkbox {
+	margin: auto 15px auto 0px;
+}
+@media (max-width: 699px){
+  .searchContainer.hidden {
+    position: fixed;
+    z-index: -1000;
+    transform: translateY(-50px);
+  }
+}
+@media (min-width: 700px){
+  .searchbar input {
+		width: 400px;
+	}
+	.checkbox {
+		margin: auto 30px auto 0px;
+	}
+}

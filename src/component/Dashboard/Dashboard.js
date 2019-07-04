@@ -11,7 +11,8 @@ class Dashboard extends Component {
 	state = {
 		myPosts: false,
 		searchQuery: "",
-		posts: []
+		posts: [],
+		hiddenSearch: false
 	}
 	componentDidMount() {
 		console.log("Dashboard Mounted")
@@ -66,17 +67,26 @@ class Dashboard extends Component {
 			})
 		}
 	}
+	hideSearch = () => {
+		console.log('clicked')
+		this.setState({
+			hiddenSearch: !this.state.hiddenSearch
+		})
+	}
 	render() {
 		const { searchQuery, myPosts } = this.state
 		const posts = searchQuery || myPosts ? this.state.posts : null || this.props.posts
 		return (
 			<div className='Dashboard'>
+				<div className="searchDrawer" onClick={this.hideSearch}></div>
 				<Search
 					change={this.handleChange}
 					searchQuery={this.state.searchQuery}
 					myPosts={this.state.myPosts}
 					reset={this.reset}
 					handleSubmit={this.handleSubmit}
+					searchBarHide={this.state.hiddenSearch}
+					hideSearch={this.hideSearch}
 				/>
 				<div className='container'>
 					<div className='posts'>
