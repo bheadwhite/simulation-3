@@ -23,6 +23,7 @@ class Form extends Component {
 	}
 
 	postNew = () => {
+		console.log("hit postNew")
 		const { content, title, imageURL } = this.state
 		const img = {
 			title,
@@ -30,13 +31,17 @@ class Form extends Component {
 			img: imageURL
 		}
 		axios.post(`/api/newPost/${this.props.user.id}`, img).then(res => {
-			store.dispatch(
-				{
-					type: UPDATE_POSTS,
-					payload: res.data
-				},
-				this.props.history.push("/dashboard")
-			)
+			if (res.data) {
+				store.dispatch(
+					{
+						type: UPDATE_POSTS,
+						payload: res.data
+					},
+					this.props.history.push("/dashboard")
+				)
+			} else {
+				alert('try again')
+			}
 		})
 	}
 	render() {

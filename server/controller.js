@@ -90,9 +90,10 @@ module.exports = {
 				user_id: Number(id)
 			})
 			.then(() => {
-				db.getAllPosts().then(resp => {
-					res.send(resp)
-				})
+				return db.getAllPosts()
+			})
+			.then(resp => {
+				res.send(resp)
 			})
 			.catch(e => console.log(e))
 	},

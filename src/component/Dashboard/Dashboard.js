@@ -87,7 +87,7 @@ class Dashboard extends Component {
 				<div className='container'>
 					<div className='posts'>
 						{posts &&
-							posts.map(({ pid, title, username, pic }) => {
+							posts.sort((a,b) => a.pid - b.pid).map(({ pid, title, username, pic }) => {
 								return (
 									<Link key={pid} to={`/post/${pid}`}>
 										<div className='postItem'>
