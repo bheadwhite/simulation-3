@@ -36,7 +36,8 @@
 @media (max-width: 699px){
   .searchContainer.hidden {
     position: fixed;
-    z-index: -1000;
+		z-index: -1000;
+		visibility: hidden;
     transform: translateY(-50px);
   }
 }
@@ -46,5 +47,8 @@
 	}
 	.checkbox {
 		margin: auto 30px auto 0px;
+	}
+	.searchDrawer {
+		display: none;
 	}
 }

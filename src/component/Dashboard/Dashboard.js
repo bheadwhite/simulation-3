@@ -72,16 +72,18 @@ class Dashboard extends Component {
 		const posts = searchQuery || myPosts ? this.state.posts : null || this.props.posts
 		return (
 			<div className='Dashboard'>
-				<div className="searchDrawer" onClick={this.hideSearch}></div>
-				<Search
-					change={this.handleChange}
-					searchQuery={this.state.searchQuery}
-					myPosts={this.state.myPosts}
-					reset={this.reset}
-					handleSubmit={this.handleSubmit}
-					searchBarHide={this.state.hiddenSearch}
-					hideSearch={this.hideSearch}
-				/>
+				<div className='searchDrawer' onClick={this.hideSearch} />
+				<div className='wrapper'>
+					<Search
+						change={this.handleChange}
+						searchQuery={this.state.searchQuery}
+						myPosts={this.state.myPosts}
+						reset={this.reset}
+						handleSubmit={this.handleSubmit}
+						searchBarHide={this.state.hiddenSearch}
+						hideSearch={this.hideSearch}
+					/>
+				</div>
 				<div className='container'>
 					<div className='posts'>
 						{posts &&

@@ -64,13 +64,14 @@
 		height: 100vh;
 		flex-flow: column;
 	}
-	.nav .links {
-		margin-top: 3rem;
+	.nav .links * {
+		margin-top: 2rem;
 	}
 	#editBtn {
 		margin-left: 14px;
 	}
 	.nav .power {
 		margin-top: auto;
+		margin-bottom: 1rem;
 	}
 }

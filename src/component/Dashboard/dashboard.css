@@ -5,6 +5,9 @@
 	padding-right: 17px;
 	box-sizing: content-box;
 }
+.Dashboard .wrapper {
+	margin-right: 9px;
+}
 .posts {
 	text-align: left;
 	display: flex;
